@@ -1,0 +1,23 @@
+{
+  "name": "raspi-stepper-motor",
+  "version": "1.0.0",
+  "description": "control stepper motor using node.js and rasberrypi",
+  "main": "app.js",
+  "scripts": {
+    "test": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mangeshparanjape/raspi-stepper-motor.git"
+  },
+  "author": "Mangesh Paranjape",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mangeshparanjape/raspi-stepper-motor/issues"
+  },
+  "homepage": "https://github.com/mangeshparanjape/raspi-stepper-motor#readme",
+  "dependencies": {
+    "johnny-five": "^0.9.61",
+    "stepper-wiringpi": "0.0.2"
+  }
+}
