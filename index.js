@@ -26,7 +26,7 @@ var http = http.createServer(app).listen(app.get('port'), function () {
 var io = require('socket.io')(http);
 
 var controller = {
-    params= {
+    params: {
         rpm: 200,
         pin1: 23,
         pin2: 24,
@@ -87,4 +87,14 @@ io.sockets.on('connection', function (socket) {
 });
 
 //we initialise the motor controller
+var params= {
+        rpm: 200,
+        pin1: 23,
+        pin2: 24,
+        speed: 60,
+        steps: 100,
+        clip: 0,
+        direction: "forward"
+    };
+controller.params=params;
 controller.init();
