@@ -105,7 +105,7 @@ var controller = {
             //    p.pause();
             //});
             //this.playMusic()
-            p.play();
+            //p.play();
             //]);
         }
         catch (e) {
@@ -121,7 +121,7 @@ var controller = {
             //    p.pause();
             //});
             //this.playMusic()
-            p.play();
+            //p.play();
             //]);
         }
         catch (e) {
@@ -131,7 +131,7 @@ var controller = {
 
     stop: function () {
         //motor.stop();
-        p.pause();
+        //p.pause();
     },
 
     playMusic: function () {
