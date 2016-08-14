@@ -22,8 +22,7 @@ var http = http.createServer(app).listen(app.get('port'), function () {
 var io = require('socket.io')(http);
 
 var controller = function () {
-    var _this = this,
-        motor,
+    var motor,
         p = new sp();
     p.add(__dirname + '/sound/SnoringMale.mp3');
     var params = {
@@ -39,32 +38,38 @@ var controller = function () {
 
 
 controller.prototype.init = function (p) {
+    var _this = this;
     _this.params = p;
     _this.motor = stepperWiringpi.setup(params.rpm, params.pin1, params.pin2);
     _this.motor.setSpeed(params.speed);
 };
 
 controller.prototype.forward = function () {
+    var _this = this;
     _this.motor.step(params.steps, function () {
         stopMusic();
     });
 };
 
 controller.prototype.backward = function () {
+    var _this = this;
     _this.motor.step(params.steps, function () {
         stopMusic();
     });
 };
 
 controller.prototype.stop = function () {
+    var _this = this;
     _this.motor.stop();
 };
 
 controller.prototype.playMusic = function () {
+    var _this = this;
     _this.p.play();
 };
 
 controller.prototype.stopMusic = function () {
+    var _this = this;
     _this.p.pause();
 };
 
