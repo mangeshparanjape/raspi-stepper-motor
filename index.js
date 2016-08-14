@@ -26,7 +26,7 @@ var http = http.createServer(app).listen(app.get('port'), function () {
 var io = require('socket.io')(http);
 
 var controller = {
-    params: {
+    params= {
         rpm: 200,
         pin1: 23,
         pin2: 24,
