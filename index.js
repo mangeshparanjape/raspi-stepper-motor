@@ -100,10 +100,10 @@ var controller = {
     forward: function () {
         try {
             //async.parallel([
-            //motor.step(this.params.steps, function () {
-            //    //this.stopMusic();
-            //    p.pause();
-            //});
+            motor.step(this.params.steps, function () {
+                //this.stopMusic();
+                //p.pause();
+            });
             //this.playMusic()
             //p.play();
             //]);
@@ -116,10 +116,10 @@ var controller = {
     backward: function () {
         try {
             //async.parallel([
-            //motor.step(this.params.steps, function () {
-            //    /*this.stopMusic();*/
-            //    p.pause();
-            //});
+            motor.step(this.params.steps, function () {
+                /*this.stopMusic();*/
+                //p.pause();
+            });
             //this.playMusic()
             //p.play();
             //]);
