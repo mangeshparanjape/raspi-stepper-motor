@@ -77,7 +77,7 @@ var c = new controller();
 */
 var motor;
 var p = new sp();
-p.add(__dirname + '/sound/SnoringMale.mp3');
+p.add('/home/stepper-ctrl/raspi-stepper-motor/sound/sound/SnoringMale.mp3');
 //p.add(__dirname + '/sound/DrumMachine.mp3');
 var controller = {
     params: {
@@ -131,7 +131,7 @@ var controller = {
 
     stop: function () {
         //motor.stop();
-        //p.pause();
+        p.pause();
     },
 
     playMusic: function () {
