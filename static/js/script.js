@@ -2,7 +2,7 @@ $(function () {
     var socket = io.connect(), //we connect by using a websocket
         ui = {
             forward: $('.btn-forward'),
-            backward: $('.btn-backkward'),
+            backward: $('.btn-backward'),
             all: $('.btn')
         },
         activeClass = 'is-active',
