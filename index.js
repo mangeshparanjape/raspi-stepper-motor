@@ -5,7 +5,7 @@ var express = require('express'),
     app = express(),
     stepperWiringpi = require('stepper-wiringpi'),
     sp = require('stream-player');
-   
+
 
 //we use the port 3000
 app.set('port', 3000);
@@ -21,14 +21,11 @@ var http = http.createServer(app).listen(app.get('port'), function () {
 //we initialise socket.io
 var io = require('socket.io')(http);
 
-var controller= function() {
-    var _this=this,
-    motor,
-    p = new sp();
-
-    //p.add(__dirname + '/sound/DrumMachine.mp3');
+var controller = function () {
+    var _this = this,
+        motor,
+        p = new sp();
     p.add(__dirname + '/sound/SnoringMale.mp3');
-
     var params = {
         rpm: 200,
         pin1: 23,
@@ -38,39 +35,40 @@ var controller= function() {
         clip: 0,
         direction: "forward"
     };
-
-    var init = function (p) {
-        _this.params = p;
-        _this.motor = stepperWiringpi.setup(params.rpm, params.pin1, params.pin2);
-        _this.motor.setSpeed(params.speed);
-    };
-
-    var forward = function () {
-        _this.motor.step(params.steps, function () {
-            stopMusic();
-        });
-    };
-
-    var backward = function () {
-        _this.motor.step(params.steps, function () {
-            stopMusic();
-        });
-    };
-
-    var stop = function () {
-        _this.motor.stop();
-    };
-
-    var playMusic = function () {
-        _this.p.play();
-    };
-
-    var stopMusic = function () {
-        _this.p.pause();
-    };
 };
 
-module.exports = controller;
+
+controller.prototype.init = function (p) {
+    _this.params = p;
+    _this.motor = stepperWiringpi.setup(params.rpm, params.pin1, params.pin2);
+    _this.motor.setSpeed(params.speed);
+};
+
+controller.prototype.forward = function () {
+    _this.motor.step(params.steps, function () {
+        stopMusic();
+    });
+};
+
+controller.prototype.backward = function () {
+    _this.motor.step(params.steps, function () {
+        stopMusic();
+    });
+};
+
+controller.prototype.stop = function () {
+    _this.motor.stop();
+};
+
+controller.prototype.playMusic = function () {
+    _this.p.play();
+};
+
+controller.prototype.stopMusic = function () {
+    _this.p.pause();
+};
+
+var c = new controller();
 /*var controller = {
     params: {
         rpm: 200,
@@ -119,28 +117,28 @@ io.sockets.on('connection', function (socket) {
     socket.on('move', function (direction) {
         switch (direction) {
             case 'forward':
-                controller.forward();
+                c.forward();
                 break;
             case 'backward':
-                controller.backward();
+                c.backward();
                 break;
         }
     });
     //we listen to the stop signal
     socket.on('stop', function (dir) {
-        controller.stop();
+        c.stop();
     });
 });
 
 //we initialise the motor controller
-var params= {
-        rpm: 200,
-        pin1: 23,
-        pin2: 24,
-        speed: 60,
-        steps: 100,
-        clip: 0,
-        direction: "forward"
-    };
+var params = {
+    rpm: 200,
+    pin1: 23,
+    pin2: 24,
+    speed: 60,
+    steps: 100,
+    clip: 0,
+    direction: "forward"
+};
 //controller.params=params;
-controller.init(params);
+c.init(params);
