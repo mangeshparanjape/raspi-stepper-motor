@@ -116,7 +116,7 @@ var controller = {
     backward: function () {
         try {
             //async.parallel([
-            motor.step(this.params.steps, function () {
+            motor.step((this.params.steps * -1), function () {
                 /*this.stopMusic();*/
                 //p.pause();
             });
