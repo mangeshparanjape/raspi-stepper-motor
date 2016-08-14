@@ -45,11 +45,12 @@ body {
  left: 110px;
 }
  
-.btn-backward {
+ .btn-backward {
  top: 114px;
- left: 0;
+ left: 110px;
 }
- 
+
+
 .btn.is-active {
  color: #888;
  background: #222;
