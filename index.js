@@ -90,6 +90,8 @@ var controller = {
     init: function () {
         motor = stepperWiringpi.setup(this.params.rpm, this.params.pin1, this.params.pin2);
         motor.setSpeed(this.params.speed);
+        console.log("create motor object");
+        console.log("set motor speed");
     },
 
     forward: function () {
