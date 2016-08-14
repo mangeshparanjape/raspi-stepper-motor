@@ -95,19 +95,25 @@ var controller = {
     },
 
     forward: function () {
-        motor.step(this.params.steps, function () {
-            stopMusic();
-        });
+        async.parallel([
+            motor.step(this.params.steps, function () {
+                this.stopMusic();
+            }),
+            this.playMusic()
+        ]);
     },
 
     backward: function () {
-        motor.step(this.params.steps, function () {
-            stopMusic();
-        });
+        async.parallel([
+            motor.step(this.params.steps, function () {
+                this.stopMusic();
+            }),
+            this.playMusic()
+        ]);
     },
 
     stop: function () {
-        motor.stop();
+        this.motor.stop();
     },
 
     playMusic: function () {

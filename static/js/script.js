@@ -17,11 +17,11 @@ $(function () {
 
         isPressed = true;
         switch (e.which) {
-            case 87: //code for the key w
+            case 38: //code for the key w
                 socket.emit('move', 'forward');
                 ui.forward.addClass(activeClass);
                 break;
-            case 83: //code for the key a
+            case 40: //code for the key a
                 socket.emit('move', 'backward');
                 ui.backward.addClass(activeClass);
                 break;
