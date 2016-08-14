@@ -76,6 +76,8 @@ controller.prototype.stopMusic = function () {
 var c = new controller();
 */
 var motor;
+var p = new sp();
+p.add(__dirname + '/sound/SnoringMale.mp3');
 var controller = {
     params: {
         rpm: 200,
