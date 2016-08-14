@@ -119,7 +119,7 @@ var controller = {
     },
 
     stop: function () {
-        //this.motor.stop();
+        motor.stop();
     },
 
     playMusic: function () {
