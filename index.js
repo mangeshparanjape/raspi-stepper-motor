@@ -21,7 +21,7 @@ var http = http.createServer(app).listen(app.get('port'), function () {
 //we initialise socket.io
 var io = require('socket.io')(http);
 
-var controller = function () {
+/*var controller = function () {
     var motor,
         p = new sp();
     p.add(__dirname + '/sound/SnoringMale.mp3');
@@ -34,10 +34,10 @@ var controller = function () {
         clip: 0,
         direction: "forward"
     };
-};
+};*/
 
 
-controller.prototype.init = function (p) {
+/*controller.prototype.init = function (p) {
     var _this = this;
     _this.params = p;
     _this.motor = stepperWiringpi.setup(params.rpm, params.pin1, params.pin2);
@@ -74,7 +74,9 @@ controller.prototype.stopMusic = function () {
 };
 
 var c = new controller();
-/*var controller = {
+*/
+var motor;
+var controller = {
     params: {
         rpm: 200,
         pin1: 23,
@@ -86,7 +88,7 @@ var c = new controller();
     },
 
     init: function () {
-        var motor = stepperWiringpi.setup(params.rpm, params.pin1, params.pin2);
+        motor = stepperWiringpi.setup(params.rpm, params.pin1, params.pin2);
         motor.setSpeed(params.speed);
     },
 
@@ -114,7 +116,7 @@ var c = new controller();
         p.pause();
     }
 };
-*/
+
 
 //we listen to new connections
 io.sockets.on('connection', function (socket) {
@@ -123,29 +125,19 @@ io.sockets.on('connection', function (socket) {
         switch (direction) {
             case 'forward':
                 console.log("Forward");
-                c.forward();
+                controller.forward();
                 break;
             case 'backward':
                 console.log("Backward");
-                c.backward();
+                controller.backward();
                 break;
         }
     });
     //we listen to the stop signal
     socket.on('stop', function (dir) {
-        c.stop();
+        controller.stop();
     });
 });
 
 //we initialise the motor controller
-var params = {
-    rpm: 200,
-    pin1: 23,
-    pin2: 24,
-    speed: 60,
-    steps: 100,
-    clip: 0,
-    direction: "forward"
-};
-//controller.params=params;
-c.init(params);
+controller.init();
