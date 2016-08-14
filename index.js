@@ -97,18 +97,22 @@ var controller = {
     forward: function () {
         async.parallel([
             motor.step(this.params.steps, function () {
-                this.stopMusic();
+                //this.stopMusic();
+                p.pause();
             }),
-            this.playMusic()
+            //this.playMusic()
+            p.play()
         ]);
     },
 
     backward: function () {
         async.parallel([
             motor.step(this.params.steps, function () {
-                this.stopMusic();
+                /*this.stopMusic();*/
+                p.pause();
             }),
-            this.playMusic()
+            //this.playMusic()
+            p.play()
         ]);
     },
 
