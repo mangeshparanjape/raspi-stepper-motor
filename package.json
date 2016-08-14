@@ -18,6 +18,10 @@
   "homepage": "https://github.com/mangeshparanjape/raspi-stepper-motor#readme",
   "dependencies": {
     "johnny-five": "^0.9.61",
-    "stepper-wiringpi": "0.0.2"
+    "lame": "^1.2.4",
+    "node-gyp": "^3.4.0",
+    "play": "^0.5.0",
+    "stepper-wiringpi": "0.0.2",
+    "stream-player": "^0.3.0"
   }
 }
