@@ -1,6 +1,6 @@
-var path = require('path'); var stepperWiringpi= require 
-('stepper-wiringpi'); var sp = require('stream-player'); var p = new 
-sp(); 
+var path = require('path'); 
+var stepperWiringpi= require('stepper-wiringpi'); 
+var sp = require('stream-player'); var p = new sp(); 
 p.add('/home/stepper-ctrl/raspi-stepper-motor/sound/DrumMachine.mp3'); 
 //p.play();
 
