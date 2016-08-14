@@ -122,9 +122,11 @@ io.sockets.on('connection', function (socket) {
     socket.on('move', function (direction) {
         switch (direction) {
             case 'forward':
+                console.log("Forward");
                 c.forward();
                 break;
             case 'backward':
+                console.log("Backward");
                 c.backward();
                 break;
         }
