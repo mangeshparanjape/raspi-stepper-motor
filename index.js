@@ -22,8 +22,8 @@ var http = http.createServer(app).listen(app.get('port'), function () {
 var io = require('socket.io')(http);
 
 var controller= function() {
-    var _this=this;
-    var motor;
+    var _this=this,
+    motor,
     p = new sp();
 
     //p.add(__dirname + '/sound/DrumMachine.mp3');
@@ -70,6 +70,7 @@ var controller= function() {
     };
 };
 
+module.exports = controller;
 /*var controller = {
     params: {
         rpm: 200,
