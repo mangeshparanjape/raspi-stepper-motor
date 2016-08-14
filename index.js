@@ -77,8 +77,8 @@ var c = new controller();
 */
 var motor;
 var p = new sp();
-//p.add(__dirname + '/sound/SnoringMale.mp3');
-p.add(__dirname + '/sound/DrumMachine.mp3');
+p.add(__dirname + '/sound/SnoringMale.mp3');
+//p.add(__dirname + '/sound/DrumMachine.mp3');
 var controller = {
     params: {
         rpm: 200,
@@ -105,7 +105,7 @@ var controller = {
                 //p.pause();
             });
             //this.playMusic()
-            //p.play();
+            p.play();
             //]);
         }
         catch (e) {
