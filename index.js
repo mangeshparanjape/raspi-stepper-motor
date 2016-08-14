@@ -88,18 +88,18 @@ var controller = {
     },
 
     init: function () {
-        motor = stepperWiringpi.setup(params.rpm, params.pin1, params.pin2);
-        motor.setSpeed(params.speed);
+        motor = stepperWiringpi.setup(this.params.rpm, this.params.pin1, this.params.pin2);
+        motor.setSpeed(this.params.speed);
     },
 
     forward: function () {
-        motor.step(params.steps, function () {
+        motor.step(this.params.steps, function () {
             stopMusic();
         });
     },
 
     backward: function () {
-        motor.step(params.steps, function () {
+        motor.step(this.params.steps, function () {
             stopMusic();
         });
     },
