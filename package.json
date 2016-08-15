@@ -21,6 +21,7 @@
     "lame": "^1.2.4",
     "node-gyp": "^3.4.0",
     "play": "^0.5.0",
+    "socket.io": "^1.4.8",
     "stepper-wiringpi": "0.0.2",
     "stream-player": "^0.3.0"
   }

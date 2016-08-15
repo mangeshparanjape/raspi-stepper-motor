@@ -93,7 +93,7 @@ var controller = {
         motor = stepperWiringpi.setup(this.params.rpm, this.params.pin1, this.params.pin2);
         motor.setSpeed(this.params.speed);
         p = new sp();
-        p.add('/home/stepper-ctrl/raspi-stepper-motor/sound/SnoringMale.mp3');
+        p.add('/home/stepper-ctrl/raspi-stepper-motor/sound/DrumMachine.mp3');
         console.log("create motor object");
         console.log("set motor speed");
     },
