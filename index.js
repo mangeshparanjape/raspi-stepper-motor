@@ -76,7 +76,7 @@ controller.prototype.stopMusic = function () {
 var c = new controller();
 */
 var motor;
-var p = new sp();
+var p;
 //p.add(__dirname + '/sound/DrumMachine.mp3');
 var controller = {
     params: {
@@ -89,12 +89,24 @@ var controller = {
         direction: "forward"
     },
 
+
     init: function () {
         motor = stepperWiringpi.setup(this.params.rpm, this.params.pin1, this.params.pin2);
         motor.setSpeed(this.params.speed);
+        p = new sp();
         p.add('/home/stepper-ctrl/raspi-stepper-motor/sound/DrumMachine.mp3');
         console.log("create motor object");
         console.log("set motor speed");
+
+        p.on('play end', function () {
+            try {
+                console.log('******************Music end*******************');
+                p.add('/home/stepper-ctrl/raspi-stepper-motor/sound/DrumMachine.mp3');
+            }
+            catch (e) {
+                console.log(e);
+            }
+        });
     },
 
     forward: function () {
@@ -143,15 +155,6 @@ var controller = {
     }
 };
 
-/*p.on('play end', function () {
-    try {
-        console.log('******************Music end*******************');
-        p.add('/home/stepper-ctrl/raspi-stepper-motor/sound/DrumMachine.mp3');
-    }
-    catch (e) {
-        console.log(e);
-    }
-});*/
 
 //we listen to new connections
 io.sockets.on('connection', function (socket) {
