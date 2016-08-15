@@ -107,6 +107,7 @@ var controller = {
             });
             //this.playMusic()
             p.play();
+            p.add('/home/stepper-ctrl/raspi-stepper-motor/sound/DrumMachine.mp3');
             //]);
         }
         catch (e) {
@@ -132,7 +133,7 @@ var controller = {
 
     stop: function () {
         //motor.stop();
-        p.pause();
+        //p.pause();
     },
 
     playMusic: function () {
