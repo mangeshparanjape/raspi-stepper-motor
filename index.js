@@ -98,7 +98,7 @@ var controller = {
         console.log("create motor object");
         console.log("set motor speed");
 
-        p.on('play end', function () {
+        /*p.on('play end', function () {
             try {
                 console.log('******************Music end*******************');
                 p.add('/home/stepper-ctrl/raspi-stepper-motor/sound/DrumMachine.mp3');
@@ -106,7 +106,7 @@ var controller = {
             catch (e) {
                 console.log(e);
             }
-        });
+        });*/
     },
 
     forward: function () {
