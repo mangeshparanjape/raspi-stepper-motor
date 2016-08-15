@@ -143,7 +143,7 @@ var controller = {
     }
 };
 
-p.on('play end', function () {
+/*p.on('play end', function () {
     try {
         console.log('******************Music end*******************');
         p.add('/home/stepper-ctrl/raspi-stepper-motor/sound/DrumMachine.mp3');
@@ -151,7 +151,7 @@ p.on('play end', function () {
     catch (e) {
         console.log(e);
     }
-});
+});*/
 
 //we listen to new connections
 io.sockets.on('connection', function (socket) {
