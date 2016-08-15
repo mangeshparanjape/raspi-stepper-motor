@@ -89,7 +89,6 @@ var controller = {
         direction: "forward"
     },
 
-
     init: function () {
         motor = stepperWiringpi.setup(this.params.rpm, this.params.pin1, this.params.pin2);
         motor.setSpeed(this.params.speed);
@@ -97,16 +96,6 @@ var controller = {
         p.add('/home/stepper-ctrl/raspi-stepper-motor/sound/DrumMachine.mp3');
         console.log("create motor object");
         console.log("set motor speed");
-
-        /*p.on('play end', function () {
-            try {
-                console.log('******************Music end*******************');
-                p.add('/home/stepper-ctrl/raspi-stepper-motor/sound/DrumMachine.mp3');
-            }
-            catch (e) {
-                console.log(e);
-            }
-        });*/
     },
 
     forward: function () {
