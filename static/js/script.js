@@ -12,6 +12,7 @@ $(function () {
 
     //we listen to key pressing
     $('.btn-init').click(function(e) {
+        $(this).addClass(activeClass);
         params.rpm= $('#rpm');
         params.pin1= $('#pin1');
         params.pin2= $('#pin2');
@@ -19,8 +20,8 @@ $(function () {
         params.steps= $('#steps');
         params.clip= $('#clip');
         params.direction= $('#direction');
-        
-        socket.emit('init', params);
+        console.log(params);
+        //socket.emit('init', params);
     });
     $(document).keydown(function (e) {
         //ignores other keys pressed if a key is already pressed
