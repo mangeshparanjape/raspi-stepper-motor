@@ -37,11 +37,11 @@ var controller = {
 
     init: function (p) {
         if(p){
-            this.params.rpm = p.rpm;
-            this.params.pin1=p.pin1;
-            this.params.pin2 = p.pin2;
-            this.params.speed = p.speed;
-            this.params.steps = p.steps;
+            this.params.rpm = parseInt(p.rpm,10);
+            this.params.pin1=parseInt(p.pin1,10);
+            this.params.pin2 = parseInt(p.pin2,10);
+            this.params.speed = parseInt(p.speed,10);
+            this.params.steps = parseInt(p.steps,10);
             this.params.clip = p.clip;
             this.params.direction = p.direction;
         }
