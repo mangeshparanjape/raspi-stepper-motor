@@ -13,15 +13,19 @@ $(function () {
     //we listen to key pressing
     $('.btn-init').click(function(e) {
         $(this).addClass(activeClass);
-        params.rpm= $('#rpm');
-        params.pin1= $('#pin1');
-        params.pin2= $('#pin2');
-        params.speed= $('#speed');
-        params.steps= $('#steps');
-        params.clip= $('#clip');
-        params.direction= $('#direction');
+        params.rpm= $('#rpm')[0].value;
+        params.pin1= $('#pin1')[0].value;
+        params.pin2= $('#pin2')[0].value;
+        params.speed= $('#speed')[0].value;
+        params.steps= $('#steps')[0].value;
+        params.clip= $('#clip')[0].value;
+        params.direction= $('#direction')[0].value;
         console.log(params);
-        //socket.emit('init', params);
+        
+        socket.emit('init', params, function(){
+            console.log("done");
+        });
+               
     });
     $(document).keydown(function (e) {
         //ignores other keys pressed if a key is already pressed
@@ -48,4 +52,5 @@ $(function () {
         socket.emit('stop');
         isPressed = false;
     });
+    
 });
