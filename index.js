@@ -35,15 +35,15 @@ var controller = {
         direction: "forward"
     },
 
-    init: function (p) {
-        if(p){
-            this.params.rpm = parseInt(p.rpm,10);
-            this.params.pin1=parseInt(p.pin1,10);
-            this.params.pin2 = parseInt(p.pin2,10);
-            this.params.speed = parseInt(p.speed,10);
-            this.params.steps = parseInt(p.steps,10);
-            this.params.clip = p.clip;
-            this.params.direction = p.direction;
+    init: function (pr) {
+        if(pr){
+            this.params.rpm = parseInt(pr.rpm,10);
+            this.params.pin1=parseInt(pr.pin1,10);
+            this.params.pin2 = parseInt(pr.pin2,10);
+            this.params.speed = parseInt(pr.speed,10);
+            this.params.steps = parseInt(pr.steps,10);
+            this.params.clip = pr.clip;
+            this.params.direction = pr.direction;
         }
         motor = stepperWiringpi.setup(this.params.rpm, this.params.pin1, this.params.pin2);
         motor.setSpeed(this.params.speed);
