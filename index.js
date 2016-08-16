@@ -21,60 +21,6 @@ var http = http.createServer(app).listen(app.get('port'), function () {
 //we initialise socket.io
 var io = require('socket.io')(http);
 
-/*var controller = function () {
-    var motor,
-        p = new sp();
-    p.add(__dirname + '/sound/SnoringMale.mp3');
-    var params = {
-        rpm: 200,
-        pin1: 23,
-        pin2: 24,
-        speed: 60,
-        steps: 100,
-        clip: 0,
-        direction: "forward"
-    };
-};*/
-
-
-/*controller.prototype.init = function (p) {
-    var _this = this;
-    _this.params = p;
-    _this.motor = stepperWiringpi.setup(params.rpm, params.pin1, params.pin2);
-    _this.motor.setSpeed(params.speed);
-};
-
-controller.prototype.forward = function () {
-    var _this = this;
-    _this.motor.step(params.steps, function () {
-        stopMusic();
-    });
-};
-
-controller.prototype.backward = function () {
-    var _this = this;
-    _this.motor.step(params.steps, function () {
-        stopMusic();
-    });
-};
-
-controller.prototype.stop = function () {
-    var _this = this;
-    _this.motor.stop();
-};
-
-controller.prototype.playMusic = function () {
-    var _this = this;
-    _this.p.play();
-};
-
-controller.prototype.stopMusic = function () {
-    var _this = this;
-    _this.p.pause();
-};
-
-var c = new controller();
-*/
 var motor;
 var p;
 //p.add(__dirname + '/sound/DrumMachine.mp3');
@@ -89,7 +35,16 @@ var controller = {
         direction: "forward"
     },
 
-    init: function () {
+    init: function (p) {
+        if(p){
+            this.params.rpm = p.rpm;
+            this.params.pin1=p.pin1;
+            this.params.pin2 = p.pin2;
+            this.params.speed = p.speed;
+            this.params.steps = p.steps;
+            this.params.clip = p.clip;
+            this.params.direction = p.direction;
+        }
         motor = stepperWiringpi.setup(this.params.rpm, this.params.pin1, this.params.pin2);
         motor.setSpeed(this.params.speed);
         p = new sp();
@@ -163,6 +118,10 @@ io.sockets.on('connection', function (socket) {
                 break;
         }
     });
+    socket.on('init', function (params) {
+        controller.init(params);
+        console.log(params);
+    });
     //we listen to the stop signal
     socket.on('stop', function (dir) {
         controller.stop();
@@ -170,4 +129,4 @@ io.sockets.on('connection', function (socket) {
 });
 
 //we initialise the motor controller
-controller.init();
+//controller.init();

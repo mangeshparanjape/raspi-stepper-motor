@@ -50,6 +50,14 @@ body {
  left: 110px;
 }
 
+.btn-init {
+ color: #888;
+ background: #222;
+ box-shadow:
+   inset 0 0 50px #333,
+   0 0 3px #333;
+ margin-top: 4px;
+}
 
 .btn.is-active {
  color: #888;
