@@ -116,7 +116,8 @@ var controller = {
         /*omxp.playPause(function(err){
             console.log("pause");
         });*/
-        omxp.setVolume(0, function(err, volume){});
+        //omxp.setVolume(0, function(err, volume){});
+        omxp.stop();
     },
 
     playMusic: function () {
