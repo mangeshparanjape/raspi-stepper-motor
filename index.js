@@ -18,9 +18,9 @@ var opts = {
 };
 omxp.on('finish', function() {
     console.log('============= Finished =============');
-    omxp.open(clip, opts);
+    //omxp.open(clip, opts);
 });
-omxp.open(clip, opts);
+
 //sp = require('stream-player');
 
 
@@ -82,9 +82,7 @@ var controller = {
             p.play();*/
 
             //]);
-
-            omxp.playPause(function(err){});
-            
+            omxp.open(clip, opts);
         }
         catch (e) {
             console.log(e);
@@ -112,6 +110,7 @@ var controller = {
         //motor.stop();
         //p.pause();
         omxp.pause(function(err){});
+        //omxp.playPause(function(err){});
     },
 
     playMusic: function () {
