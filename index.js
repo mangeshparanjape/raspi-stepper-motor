@@ -112,14 +112,17 @@ var controller = {
     stop: function () {
         //motor.stop();
         //p.pause();
-        omxp.pause(function(err){
+        /*omxp.pause(function(err){
             if(err) console.log(err);
             console.log("*************************************************pause");
-        });
+        });*/
         /*omxp.playPause(function(err){
             console.log("*************************************************pause");
         });*/
-        //omxp.setVolume(0, function(err, volume){});
+        omxp.setVolume(0.0, function(err, volume){
+            if(err) console.log(err);
+            console.log("*******************" + volume);
+        });
         //omxp.stop();
     },
 
