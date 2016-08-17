@@ -4,7 +4,24 @@ var express = require('express'),
     async = require('async'),
     app = express(),
     stepperWiringpi = require('stepper-wiringpi'),
-    sp = require('stream-player');
+    omxp = require('omxplayer-controll')
+    clip = '/home/stepper-ctrl/raspi-stepper-motor/sound/DrumMachine.mp3';
+var opts = {
+    'audioOutput': 'local', //  'hdmi' | 'local' | 'both' 
+    'blackBackground': false, //false | true | default: true 
+    'disableKeys': true, //false | true | default: false 
+    'disableOnScreenDisplay': true, //false | true | default: false 
+    'disableGhostbox': true, //false | true | default: false 
+    'subtitlePath': '', //default: "" 
+    'startAt': 0, //default: 0 
+    'startVolume': 0.8 //0.0 ... 1.0 default: 1.0 
+};
+omxp.on('finish', function() {
+    console.log('============= Finished =============');
+    omxp.open(clip, opts);
+});
+omxp.open(clip, opts);
+//sp = require('stream-player');
 
 
 //we use the port 3000
@@ -22,7 +39,7 @@ var http = http.createServer(app).listen(app.get('port'), function () {
 var io = require('socket.io')(http);
 
 var motor;
-var p;
+//var p;
 //p.add(__dirname + '/sound/DrumMachine.mp3');
 var controller = {
     params: {
@@ -36,19 +53,19 @@ var controller = {
     },
 
     init: function (pr) {
-        if(pr){
-            this.params.rpm = parseInt(pr.rpm,10);
-            this.params.pin1=parseInt(pr.pin1,10);
-            this.params.pin2 = parseInt(pr.pin2,10);
-            this.params.speed = parseInt(pr.speed,10);
-            this.params.steps = parseInt(pr.steps,10);
+        if (pr) {
+            this.params.rpm = parseInt(pr.rpm, 10);
+            this.params.pin1 = parseInt(pr.pin1, 10);
+            this.params.pin2 = parseInt(pr.pin2, 10);
+            this.params.speed = parseInt(pr.speed, 10);
+            this.params.steps = parseInt(pr.steps, 10);
             this.params.clip = pr.clip;
             this.params.direction = pr.direction;
         }
         motor = stepperWiringpi.setup(this.params.rpm, this.params.pin1, this.params.pin2);
         motor.setSpeed(this.params.speed);
-        p = new sp();
-        p.add('/home/stepper-ctrl/raspi-stepper-motor/sound/DrumMachine.mp3');
+        /* p = new sp();
+         p.add('/home/stepper-ctrl/raspi-stepper-motor/sound/DrumMachine.mp3');*/
         console.log("create motor object");
         console.log("set motor speed");
     },
@@ -61,10 +78,13 @@ var controller = {
                 //p.pause();
             });
             //this.playMusic()
-            p.add('/home/stepper-ctrl/raspi-stepper-motor/sound/DrumMachine.mp3');
-            p.play();
-            
+            /*p.add('/home/stepper-ctrl/raspi-stepper-motor/sound/DrumMachine.mp3');
+            p.play();*/
+
             //]);
+
+            omxp.playPause(function(err){});
+            
         }
         catch (e) {
             console.log(e);
@@ -79,8 +99,8 @@ var controller = {
                 //p.pause();
             });
             //this.playMusic()
-            p.add('/home/stepper-ctrl/raspi-stepper-motor/sound/DrumMachine.mp3');
-            p.play();
+            /* p.add('/home/stepper-ctrl/raspi-stepper-motor/sound/DrumMachine.mp3');
+             p.play();*/
             //]);
         }
         catch (e) {
@@ -90,15 +110,16 @@ var controller = {
 
     stop: function () {
         //motor.stop();
-        p.pause();
+        //p.pause();
+        omxp.pause(function(err){});
     },
 
     playMusic: function () {
-        p.play();
+        //p.play();
     },
 
     stopMusic: function () {
-        p.pause();
+        //p.pause();
     }
 };
 
