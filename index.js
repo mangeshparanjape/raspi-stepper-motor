@@ -112,10 +112,10 @@ var controller = {
     stop: function () {
         //motor.stop();
         //p.pause();
-        /*omxp.pause(function(err){
+        omxp.pause(function(err){
             if(err) console.log(err);
             console.log("*************************************************pause");
-        });*/
+        });
         /*omxp.playPause(function(err){
             console.log("*************************************************pause");
         });*/
@@ -124,10 +124,10 @@ var controller = {
             console.log("*******************" + volume);
         });*/
         //omxp.stop();
-        try{
+        /*try{
             omxp.open("", opts);
         }
-        catch(e){}
+        catch(e){}*/
     },
 
     playMusic: function () {
