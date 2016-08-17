@@ -5,7 +5,7 @@ var express = require('express'),
     app = express(),
     stepperWiringpi = require('stepper-wiringpi'),
     omxp = require('omxplayer-controll')
-    clip = '/home/stepper-ctrl/raspi-stepper-motor/sound/DrumMachine.mp3';
+    clip = '/home/stepper-ctrl/raspi-stepper-motor/sound/SnoringMale.mp3';
 var opts = {
     'audioOutput': 'local', //  'hdmi' | 'local' | 'both' 
     'blackBackground': false, //false | true | default: true 
@@ -119,11 +119,15 @@ var controller = {
         /*omxp.playPause(function(err){
             console.log("*************************************************pause");
         });*/
-        omxp.setVolume(0.0, function(err, volume){
+        /*omxp.setVolume(0.0, function(err, volume){
             if(err) console.log(err);
             console.log("*******************" + volume);
-        });
+        });*/
         //omxp.stop();
+        try{
+            omxp.open("", opts);
+        }
+        catch(e){}
     },
 
     playMusic: function () {
