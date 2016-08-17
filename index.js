@@ -109,8 +109,10 @@ var controller = {
     stop: function () {
         //motor.stop();
         //p.pause();
-        omxp.pause(function(err){});
-        //omxp.playPause(function(err){});
+        //omxp.pause(function(err){});
+        omxp.playPause(function(err){
+            console.log("pause");
+        });
     },
 
     playMusic: function () {
