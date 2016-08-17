@@ -83,6 +83,7 @@ var controller = {
 
             //]);
             omxp.open(clip, opts);
+            //omxp.setVolume(1, function(err, volume){});
         }
         catch (e) {
             console.log(e);
@@ -100,6 +101,8 @@ var controller = {
             /* p.add('/home/stepper-ctrl/raspi-stepper-motor/sound/DrumMachine.mp3');
              p.play();*/
             //]);
+            omxp.open(clip, opts);
+            //omxp.setVolume(1, function(err, volume){});
         }
         catch (e) {
             console.log(e);
@@ -110,9 +113,10 @@ var controller = {
         //motor.stop();
         //p.pause();
         //omxp.pause(function(err){});
-        omxp.playPause(function(err){
+        /*omxp.playPause(function(err){
             console.log("pause");
-        });
+        });*/
+        omxp.setVolume(0, function(err, volume){});
     },
 
     playMusic: function () {
