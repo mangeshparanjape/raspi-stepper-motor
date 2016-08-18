@@ -4,6 +4,7 @@ $(function () {
             forward: $('.btn-forward'),
             backward: $('.btn-backward'),
             initMotor: $('.btn-init'),
+            startMotor: $('.btn-start'),
             all: $('.btn')
         },
         params = {},
@@ -11,22 +12,56 @@ $(function () {
         isPressed = false;
 
     //we listen to key pressing
-    $('.btn-init').click(function(e) {
+    $('.btn-init').click(function (e) {
         $(this).addClass(activeClass);
-        params.rpm= $('#rpm')[0].value;
-        params.pin1= $('#pin1')[0].value;
-        params.pin2= $('#pin2')[0].value;
-        params.speed= $('#speed')[0].value;
-        params.steps= $('#steps')[0].value;
-        params.clip= $('#clip')[0].value;
-        params.direction= $('#direction')[0].value;
+        params.rpm = $('#rpm')[0].value;
+        params.pin1 = $('#pin1')[0].value;
+        params.pin2 = $('#pin2')[0].value;
+        params.speed = $('#speed')[0].value;
+        params.steps = $('#steps')[0].value;
+        params.clip = $('#clip')[0].value;
+        params.direction = $('#direction')[0].value;
         console.log(params);
-        
-        socket.emit('init', params, function(){
+
+        socket.emit('init', params, function () {
             console.log("done");
         });
-               
+
     });
+
+    var move = true;
+    $('.btn-start').click(function (e) {
+        $(this).addClass(activeClass);
+        var interval = setInterval(function () {
+            if (move) {
+                move = false;
+                forward();
+            }
+        }, 4000);
+    });
+
+    function forward() {
+        try {
+            socket.emit('move', 'forward');
+            console.log("forward");
+            setTimeout(function () {
+                backward();
+            }, 4000);
+        }
+        catch (e) { }
+    };
+
+    function backward() {
+        try {
+            socket.emit('move', 'backward');
+            console.log("backwards");
+        }
+        catch (e) { }
+        setTimeout(function () {
+            move = true;
+        }, 4000);
+    };
+
     $(document).keydown(function (e) {
         //ignores other keys pressed if a key is already pressed
         //we do this in order to avoid sending out several commands
@@ -52,5 +87,5 @@ $(function () {
         socket.emit('stop');
         isPressed = false;
     });
-    
+
 });
