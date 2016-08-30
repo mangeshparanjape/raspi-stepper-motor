@@ -64,7 +64,7 @@ body {
 .btn-start {
 
  display: block;
- width: 100px;
+ width: 120px;
  height: 40px;
  background: #222;
  border-radius: 5px;
@@ -86,7 +86,7 @@ body {
 .btn-stop {
 
  display: block;
- width: 100px;
+ width: 150px;
  height: 40px;
  background: #222;
  border-radius: 5px;
