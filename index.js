@@ -159,12 +159,29 @@ var controller = {
 
     stop: function () {
         try {
+            console.log("Stop  motor 1");
             motor1.stop();
+           
+        }
+        catch (e) {
+            console.log("Stop motor 1 error - " + e);
+        }
+        try {
+            console.log("Stop motor 2");
+           
             motor2.stop();
+           
+        }
+        catch (e) {
+            console.log("Stop motor 2 error - " + e);
+        }
+        try {
+            console.log("Stop motor 3");
+           
             motor3.stop();
         }
         catch (e) {
-
+            console.log("Stop motor 3 error - " + e);
         }
     },
 
@@ -199,6 +216,7 @@ io.sockets.on('connection', function (socket) {
     });
     //we listen to the stop signal
     socket.on('stop', function () {
+        console.log("Stop event fired");
         controller.stop();
     });
 });
