@@ -10,6 +10,7 @@ $(function () {
         params2 = {},
         params3 = {},
         activeClass = 'is-active',
+        inactiveClass = 'is-inactive',
         isPressed = false;
 
     //we listen to key pressing
@@ -63,6 +64,9 @@ $(function () {
         clearInterval(handle);
         handle = 0;
         socket.emit('stop');
+        $(this).addClass(inactiveClass);
+        $('.btn-start').addClass(inactiveClass);
+        $('.btn-init').addClass(inactiveClass);
     });
 
     function forward(motorNumber) {

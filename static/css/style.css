@@ -114,12 +114,19 @@ body {
 }
 
 .btn.is-inactive {
- color: #aaa;
+ display: block;
  background: #222;
+ border-radius: 5px;
+ color: #aaa;
+ text-align: center;
  box-shadow:
    inset 0 0 50px #333,
    0 4px 0 black,
    0 2px 0 #222,
    0 2px 3px #333;
+ text-shadow: 0 -1px 0 black;
+ font: normal 20px/40px helvetica, arial, sans-serif;
+ text-transform: uppercase;
+ cursor: pointer;
  border-top: 1px solid #222;
 }
