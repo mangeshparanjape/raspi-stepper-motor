@@ -112,3 +112,14 @@ body {
    0 0 3px #333;
  margin-top: 4px;
 }
+
+.btn.is-inactive {
+ color: #aaa;
+ background: #222;
+ box-shadow:
+   inset 0 0 50px #333,
+   0 4px 0 black,
+   0 2px 0 #222,
+   0 2px 3px #333;
+ border-top: 1px solid #222;
+}

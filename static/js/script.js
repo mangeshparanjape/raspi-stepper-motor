@@ -47,9 +47,10 @@ $(function () {
     });
 
     var move = true;
+    var handle;
     $('.btn-start').click(function (e) {
         $(this).addClass(activeClass);
-        var interval = setInterval(function () {
+        handle = setInterval(function () {
             if (move) {
                 move = false;
                 forward("1");
@@ -59,6 +60,8 @@ $(function () {
 
     $('.btn-stop').click(function (e) {
         $(this).addClass(activeClass);
+        clearInterval(handle);
+        handle = 0;
         socket.emit('stop');
     });
 
