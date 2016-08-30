@@ -129,4 +129,5 @@ body {
  text-transform: uppercase;
  cursor: pointer;
  border-top: 1px solid #222;
+ margin-top: 0px;
 }
