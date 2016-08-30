@@ -57,6 +57,11 @@ $(function () {
         }, 4000);
     });
 
+    $('.btn-stop').click(function (e) {
+        $(this).addClass(activeClass);
+        socket.emit('stop');
+    });
+
     function forward(motorNumber) {
         try {
             socket.emit('move', 'forward',motorNumber);
