@@ -5,7 +5,7 @@ var express = require('express'),
     app = express(),
     stepperWiringpi = require('stepper-wiringpi'),
     omxp = require('omxplayer-controll')
-    clip = '/home/stepper-ctrl/raspi-stepper-motor/sound/SnoringMale.mp3';
+clip = '/home/stepper-ctrl/raspi-stepper-motor/sound/SnoringMale.mp3';
 var opts = {
     'audioOutput': 'local', //  'hdmi' | 'local' | 'both' 
     'blackBackground': false, //false | true | default: true 
@@ -16,7 +16,7 @@ var opts = {
     'startAt': 0, //default: 0 
     'startVolume': 0.8 //0.0 ... 1.0 default: 1.0 
 };
-omxp.on('finish', function() {
+omxp.on('finish', function () {
     console.log('============= Finished =============');
     //omxp.open(clip, opts);
 });
@@ -38,11 +38,29 @@ var http = http.createServer(app).listen(app.get('port'), function () {
 //we initialise socket.io
 var io = require('socket.io')(http);
 
-var motor;
+var motor1, motor2, motor3;
 //var p;
 //p.add(__dirname + '/sound/DrumMachine.mp3');
 var controller = {
-    params: {
+    params1: {
+        rpm: 200,
+        pin1: 23,
+        pin2: 24,
+        speed: 60,
+        steps: 100,
+        clip: 0,
+        direction: "forward"
+    },
+    params2: {
+        rpm: 200,
+        pin1: 23,
+        pin2: 24,
+        speed: 60,
+        steps: 100,
+        clip: 0,
+        direction: "forward"
+    },
+    params3: {
         rpm: 200,
         pin1: 23,
         pin2: 24,
@@ -52,57 +70,87 @@ var controller = {
         direction: "forward"
     },
 
-    init: function (pr) {
-        if (pr) {
-            this.params.rpm = parseInt(pr.rpm, 10);
-            this.params.pin1 = parseInt(pr.pin1, 10);
-            this.params.pin2 = parseInt(pr.pin2, 10);
-            this.params.speed = parseInt(pr.speed, 10);
-            this.params.steps = parseInt(pr.steps, 10);
-            this.params.clip = pr.clip;
-            this.params.direction = pr.direction;
+    init: function (pr1, pr2, pr3) {
+        motor1=null;
+        motor2=null;
+        motor3=null;
+        if (pr1) {
+            this.params1.rpm = parseInt(pr1.rpm, 10);
+            this.params1.pin1 = parseInt(pr1.pin1, 10);
+            this.params1.pin2 = parseInt(pr1.pin2, 10);
+            this.params1.speed = parseInt(pr1.speed, 10);
+            this.params1.steps = parseInt(pr1.steps, 10);
+            this.params1.clip = pr1.clip;
+            this.params1.direction = pr1.direction;
         }
-        motor = stepperWiringpi.setup(this.params.rpm, this.params.pin1, this.params.pin2);
-        motor.setSpeed(this.params.speed);
-        /* p = new sp();
-         p.add('/home/stepper-ctrl/raspi-stepper-motor/sound/DrumMachine.mp3');*/
-        console.log("create motor object");
+        if (pr2) {
+            this.params2.rpm = parseInt(pr2.rpm, 10);
+            this.params2.pin1 = parseInt(pr2.pin1, 10);
+            this.params2.pin2 = parseInt(pr2.pin2, 10);
+            this.params2.speed = parseInt(pr2.speed, 10);
+            this.params2.steps = parseInt(pr2.steps, 10);
+            this.params2.clip = pr2.clip;
+            this.params2.direction = pr2.direction;
+        }
+        if (pr3) {
+            this.params3.rpm = parseInt(pr3.rpm, 10);
+            this.params3.pin1 = parseInt(pr3.pin1, 10);
+            this.params3.pin2 = parseInt(pr3.pin2, 10);
+            this.params3.speed = parseInt(pr3.speed, 10);
+            this.params3.steps = parseInt(pr3.steps, 10);
+            this.params3.clip = pr3.clip;
+            this.params3.direction = pr3.direction;
+        }
+        motor1 = stepperWiringpi.setup(this.params1.rpm, this.params1.pin1, this.params1.pin2);
+        motor1.setSpeed(this.params1.speed);
+        motor2 = stepperWiringpi.setup(this.params2.rpm, this.params2.pin1, this.params2.pin2);
+        motor2.setSpeed(this.params2.speed);
+        motor3 = stepperWiringpi.setup(this.params3.rpm, this.params3.pin1, this.params3.pin2);
+        motor3.setSpeed(this.params3.speed);
+
+        console.log("create motor objects");
         console.log("set motor speed");
     },
 
-    forward: function () {
+    forward: function (motorNumber) {
         try {
-            //async.parallel([
-            motor.step(this.params.steps, function () {
-                //this.stopMusic();
-                //p.pause();
-            });
-            //this.playMusic()
-            /*p.add('/home/stepper-ctrl/raspi-stepper-motor/sound/DrumMachine.mp3');
-            p.play();*/
-
-            //]);
-            omxp.open(clip, opts);
-            //omxp.setVolume(1, function(err, volume){});
+            if (motorNumber == "3") {
+                motor3.step(this.params3.steps, function () {
+                });
+                omxp.open(clip, opts);
+            }
+            if (motorNumber == "1") {
+                motor1.step(this.params1.steps, function () {
+                });
+               
+            }
+            if (motorNumber == "2") {
+                motor2.step(this.params2.steps, function () {
+                });
+                
+            }
         }
         catch (e) {
             console.log(e);
         }
     },
 
-    backward: function () {
+    backward: function (motorNumber) {
         try {
-            //async.parallel([
-            motor.step((this.params.steps * -1), function () {
-                /*this.stopMusic();*/
-                //p.pause();
-            });
-            //this.playMusic()
-            /* p.add('/home/stepper-ctrl/raspi-stepper-motor/sound/DrumMachine.mp3');
-             p.play();*/
-            //]);
-            omxp.open(clip, opts);
-            //omxp.setVolume(1, function(err, volume){});
+            if (motorNumber == "3") {
+                motor.step((this.params3.steps * -1), function () {
+                });
+                omxp.open(clip, opts);
+            }
+            if (motorNumber == "1") {
+                motor1.step((this.params1.steps * -1), function () {
+                });
+            }
+            if (motorNumber == "2") {
+                motor2.step((this.params2.steps * -1), function () {
+                });
+            }
+
         }
         catch (e) {
             console.log(e);
@@ -110,24 +158,14 @@ var controller = {
     },
 
     stop: function () {
-        //motor.stop();
-        //p.pause();
-        /*omxp.pause(function(err){
-            if(err) console.log(err);
-            console.log("*************************************************pause");
-        });*/
-        /*omxp.playPause(function(err){
-            console.log("*************************************************pause");
-        });*/
-        /*omxp.setVolume(0.0, function(err, volume){
-            if(err) console.log(err);
-            console.log("*******************" + volume);
-        });*/
-        //omxp.stop();
-        /*try{
-            omxp.open("", opts);
+        try {
+            motor1.stop();
+            motor2.stop();
+            motor3.stop();
         }
-        catch(e){}*/
+        catch (e) {
+
+        }
     },
 
     playMusic: function () {
@@ -143,27 +181,27 @@ var controller = {
 //we listen to new connections
 io.sockets.on('connection', function (socket) {
     //we listen the movement signal
-    socket.on('move', function (direction) {
+    socket.on('move', function (direction, motorNumber) {
         switch (direction) {
             case 'forward':
                 console.log("Forward");
-                controller.forward();
+                controller.forward(motorNumber);
                 break;
             case 'backward':
                 console.log("Backward");
-                controller.backward();
+                controller.backward(motorNumber);
                 break;
         }
     });
-    socket.on('init', function (params) {
-        controller.init(params);
-        console.log(params);
+    socket.on('init', function (params1,params2,params3) {
+        controller.init(params1,params2,params3);
+        //console.log(params);
     });
     //we listen to the stop signal
-    socket.on('stop', function (dir) {
+    socket.on('stop', function () {
         controller.stop();
     });
 });
 
-//we initialise the motor controller
+//test code: we initialise the motor controller
 //controller.init();

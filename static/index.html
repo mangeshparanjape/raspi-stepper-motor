@@ -7,22 +7,51 @@
    
    <div><p><b>Initialize Motor Parameters</b></p></div>
    <div>
-     <input type="text" name="rpm" id="rpm" value="200">
-     <input type="text" name="pin1" id="pin1" value="23">
-     <input type="text" name="pin2" id="pin2" value="24">
-     <input type="text" name="speed" id="speed" value="60">
-     <input type="text" name="steps" id="steps" value="100">
-     <input type="text" name="clip" id="clip" value="0">
-     <input type="text" name="direction" id="direction" value="forward">
-     <p>
-     <a class="btn btn-init">Init</a>
-     <p>
-     <a class="btn btn-start">Start</a>
+     <input type="label" name="rpm" id="rpm" >RPM</input>
+     <input type="label" name="pin1" id="pin1">Pin1</input>
+     <input type="label" name="pin2" id="pin2" >Pin2</input>
+     <input type="label" name="speed" id="speed">Speed</input>
+     <input type="label" name="steps" id="steps">Steps</input>
+     <input type="label" name="clip" id="clip" >Clip</input>
+     <input type="label" name="direction" id="direction">Direction</input>
+    
    </div>
-   <div class="wrapper">
-     <a class="btn btn-forward">Forward</a>
-     <a class="btn btn-backward">Backward</a>
+   <div>
+     <input type="text" name="m1-rpm" id="m1-rpm" value="200">
+     <input type="text" name="m1-pin1" id="m1-pin1" value="23">
+     <input type="text" name="m1-pin2" id="m1-pin2" value="24">
+     <input type="text" name="m1-speed" id="m1-speed" value="60">
+     <input type="text" name="m1-steps" id="m1-steps" value="100">
+     <input type="text" name="m1-clip" id="m1-clip" value="0">
+     <input type="text" name="m1-direction" id="m1-direction" value="forward">
+    
    </div>
+  <div>
+     <input type="text" name="m2-rpm" id="m2-rpm" value="200">
+     <input type="text" name="m2-pin1" id="m2-pin1" value="23">
+     <input type="text" name="m2-pin2" id="m2-pin2" value="24">
+     <input type="text" name="m2-speed" id="m2-speed" value="60">
+     <input type="text" name="m2-steps" id="m2-steps" value="100">
+     <input type="text" name="m2-clip" id="m2-clip" value="0">
+     <input type="text" name="m2-direction" id="m2-direction" value="forward">
+    
+   </div>
+   <div>
+     <input type="text" name="m3-rpm" id="m3-rpm" value="200">
+     <input type="text" name="m3-pin1" id="m3-pin1" value="23">
+     <input type="text" name="m3-pin2" id="m3-pin2" value="24">
+     <input type="text" name="m3-speed" id="m3-speed" value="60">
+     <input type="text" name="m3-steps" id="m3-steps" value="100">
+     <input type="text" name="m3-clip" id="m3-clip" value="0">
+     <input type="text" name="m3-direction" id="m3-direction" value="forward">
+    
+   </div>
+    <p>
+     <a class="btn btn-init">Init All</a>
+     <p>
+     <a class="btn btn-start">Start All</a>
+     <p>
+     <a class="btn btn-stop">Stop All</a>
  </body>
  <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
  <script type="text/javascript" src="/socket.io/socket.io.js"></script>
