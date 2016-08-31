@@ -17,21 +17,20 @@ $(function () {
 
     //we listen to key pressing
     $('.btn-init').click(function (e) {
-        initAll();
+        initAll(this);
     });
-
     
     $('.btn-start').click(function (e) {
-        startAll();
+        startAll(this);
     });
 
     $('.btn-stop').click(function (e) {
-        stopAll();
+        stopAll(this);
     });
 
-    function initAll() {
+    function initAll(t) {
         try {
-            $(this).addClass(activeClass);
+            $(t).addClass(activeClass);
             params1.rpm = $('#m1-rpm')[0].value;
             params1.pin1 = $('#m1-pin1')[0].value;
             params1.pin2 = $('#m1-pin2')[0].value;
@@ -62,14 +61,14 @@ $(function () {
             });
         }
         catch (e) {
-            $(this).removeClass(activeClass);
+            $(t).removeClass(activeClass);
         }
 
     };
 
-    function startAll() {
+    function startAll(t) {
         try {
-            $(this).addClass(activeClass);
+            $(t).addClass(activeClass);
             handle = setInterval(function () {
                 if (move) {
                     move = false;
@@ -78,7 +77,7 @@ $(function () {
             }, 4000);
         }
         catch (e) {
-            $(this).removeClass(activeClass);
+            $(t).removeClass(activeClass);
         }
     };
 
@@ -112,19 +111,19 @@ $(function () {
         catch (e) { }
     };
 
-    function stopAll() {
+    function stopAll(t) {
         try {
-            $(this).addClass(activeClass);
+            $(t).addClass(activeClass);
             clearInterval(handle);
             handle = 0;
             socket.emit('stopall'); //stopall event
             console.log("Stop all");
-            $(this).removeClass(activeClass);
+            $(t).removeClass(activeClass);
             $('.btn-start').removeClass(activeClass);
             $('.btn-init').removeClass(activeClass);
         }
         catch (e) {
-            $(this).removeClass(activeClass);
+            $(t).removeClass(activeClass);
         }
     };
 
