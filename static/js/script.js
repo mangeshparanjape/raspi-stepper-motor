@@ -13,20 +13,7 @@ $(function () {
         move = true,
         handle;
 
-    //we listen to button clicks
-    $('.btn-init').click(function (e) {
-        initAll();
-    });
-   
-    $('.btn-start').click(function (e) {
-        startAll
-    });
-
-    $('.btn-stop').click(function (e) {
-        stopAll();
-    });
-
-    function initAll() {
+        function initAll() {
         try {
             $(this).addClass(activeClass);
             params1.rpm = $('#m1-rpm')[0].value;
@@ -122,4 +109,19 @@ $(function () {
         }
     };
 
+
+    //we listen to button clicks
+    $('.btn-init').click(function (e) {
+        initAll();
+    });
+   
+    $('.btn-start').click(function (e) {
+        startAll();
+    });
+
+    $('.btn-stop').click(function (e) {
+        stopAll();
+    });
+
+    
 });
