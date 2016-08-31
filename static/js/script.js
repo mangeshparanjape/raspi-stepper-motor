@@ -3,17 +3,18 @@ $(function () {
         ui = {
             initMotor: $('.btn-init'),
             startMotor: $('.btn-start'),
-            stopMotor: $('.btn-stop')
+            stopMotor: $('.btn-stop'),
+            all: $('.btn')
         },
         params1 = {},
         params2 = {},
         params3 = {},
         activeClass = 'is-active',
         inactiveClass = 'is-inactive',
-        move = true,
-        handle;
+        isPressed = false;
 
-        function initAll() {
+    //we listen to key pressing
+    $('.btn-init').click(function (e) {
         try {
             $(this).addClass(activeClass);
             params1.rpm = $('#m1-rpm')[0].value;
@@ -48,9 +49,12 @@ $(function () {
         catch (e) {
             $(this).removeClass(activeClass);
         }
-    };
 
-    function startAll() {
+    });
+
+    var move = true;
+    var handle;
+    $('.btn-start').click(function (e) {
         try {
             $(this).addClass(activeClass);
             handle = setInterval(function () {
@@ -63,7 +67,23 @@ $(function () {
         catch (e) {
             $(this).removeClass(activeClass);
         }
-    };
+    });
+
+    $('.btn-stop').click(function (e) {
+        try {
+            $(this).addClass(activeClass);
+            clearInterval(handle);
+            handle = 0;
+            socket.emit('stopall');
+            $(this).removeClass(activeClass);
+            $('.btn-start').removeClass(activeClass);
+            $('.btn-init').removeClass(activeClass);
+        }
+        catch (e) {
+            $(this).removeClass(activeClass);
+        }
+    });
+
     function forward(motorNumber) {
         try {
             socket.emit('move', 'forward', motorNumber);
@@ -94,34 +114,4 @@ $(function () {
         catch (e) { }
     };
 
-    function stopAll() {
-        try {
-            $(this).addClass(activeClass);
-            clearInterval(handle);
-            handle = 0;
-            socket.emit('stopall');
-            $(this).removeClass(activeClass);
-            $('.btn-start').removeClass(activeClass);
-            $('.btn-init').removeClass(activeClass);
-        }
-        catch (e) {
-            $(this).removeClass(activeClass);
-        }
-    };
-
-
-    //we listen to button clicks
-    $('.btn-init').click(function (e) {
-        initAll();
-    });
-   
-    $('.btn-start').click(function (e) {
-        startAll();
-    });
-
-    $('.btn-stop').click(function (e) {
-        stopAll();
-    });
-
-    
 });
