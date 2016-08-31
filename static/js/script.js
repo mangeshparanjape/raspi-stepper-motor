@@ -3,18 +3,30 @@ $(function () {
         ui = {
             initMotor: $('.btn-init'),
             startMotor: $('.btn-start'),
-            stopMotor: $('.btn-stop'),
-            all: $('.btn')
+            stopMotor: $('.btn-stop')
         },
         params1 = {},
         params2 = {},
         params3 = {},
         activeClass = 'is-active',
         inactiveClass = 'is-inactive',
-        isPressed = false;
+        move = true,
+        handle;
 
-    //we listen to key pressing
+    //we listen to button clicks
     $('.btn-init').click(function (e) {
+        initAll();
+    });
+   
+    $('.btn-start').click(function (e) {
+        startAll
+    });
+
+    $('.btn-stop').click(function (e) {
+        stopAll();
+    });
+
+    function initAll() {
         try {
             $(this).addClass(activeClass);
             params1.rpm = $('#m1-rpm')[0].value;
@@ -49,12 +61,9 @@ $(function () {
         catch (e) {
             $(this).removeClass(activeClass);
         }
+    };
 
-    });
-
-    var move = true;
-    var handle;
-    $('.btn-start').click(function (e) {
+    function startAll() {
         try {
             $(this).addClass(activeClass);
             handle = setInterval(function () {
@@ -67,23 +76,7 @@ $(function () {
         catch (e) {
             $(this).removeClass(activeClass);
         }
-    });
-
-    $('.btn-stop').click(function (e) {
-        try {
-            $(this).addClass(activeClass);
-            clearInterval(handle);
-            handle = 0;
-            socket.emit('stop');
-            $(this).removeClass(activeClass);
-            $('.btn-start').removeClass(activeClass);
-            $('.btn-init').removeClass(activeClass);
-        }
-        catch (e) {
-            $(this).removeClass(activeClass);
-        }
-    });
-
+    };
     function forward(motorNumber) {
         try {
             socket.emit('move', 'forward', motorNumber);
@@ -106,30 +99,27 @@ $(function () {
         }, 4000);
     };
 
-    /*$(document).keydown(function (e) {
-        //ignores other keys pressed if a key is already pressed
-        //we do this in order to avoid sending out several commands
-        //when we keep the key pressed
-        if (isPressed) return;
-
-        isPressed = true;
-        switch (e.which) {
-            case 38: //code for the key w
-                socket.emit('move', 'forward');
-                ui.forward.addClass(activeClass);
-                break;
-            case 40: //code for the key a
-                socket.emit('move', 'backward');
-                ui.backward.addClass(activeClass);
-                break;
+    function stop(motorNumber) {
+        try {
+            socket.emit('stop', motorNumber);
+            console.log("stop motor " + motorNumber);
         }
-    });*/
+        catch (e) { }
+    };
 
-    //stops the motors when a key is released
-    /*$(document).keyup(function (e) {
-        ui.all.removeClass(activeClass);
-        socket.emit('stop');
-        isPressed = false;
-    });*/
+    function stopAll() {
+        try {
+            $(this).addClass(activeClass);
+            clearInterval(handle);
+            handle = 0;
+            socket.emit('stopall');
+            $(this).removeClass(activeClass);
+            $('.btn-start').removeClass(activeClass);
+            $('.btn-init').removeClass(activeClass);
+        }
+        catch (e) {
+            $(this).removeClass(activeClass);
+        }
+    };
 
 });
