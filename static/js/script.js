@@ -60,13 +60,13 @@ $(function () {
     });
 
     $('.btn-stop').click(function (e) {
-        $(this).addClass(activeClass);
+        $(this).removeClass(inactiveClass).addClass(activeClass);
         clearInterval(handle);
         handle = 0;
         socket.emit('stop');
-        $(this).addClass(inactiveClass);
-        $('.btn-start').addClass(inactiveClass);
-        $('.btn-init').addClass(inactiveClass);
+        $(this).removeClass(activeClass).addClass(inactiveClass);
+        $('.btn-start').removeClass(activeClass).addClass(inactiveClass);
+        $('.btn-init').removeClass(activeClass).addClass(inactiveClass);
     });
 
     function forward(motorNumber) {
