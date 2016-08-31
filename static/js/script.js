@@ -11,10 +11,25 @@ $(function () {
         params3 = {},
         activeClass = 'is-active',
         inactiveClass = 'is-inactive',
-        isPressed = false;
+        isPressed = false,
+        move = true,
+        handle;
 
     //we listen to key pressing
     $('.btn-init').click(function (e) {
+        initAll();
+    });
+
+    
+    $('.btn-start').click(function (e) {
+        startAll();
+    });
+
+    $('.btn-stop').click(function (e) {
+        stopAll();
+    });
+
+    function initAll() {
         try {
             $(this).addClass(activeClass);
             params1.rpm = $('#m1-rpm')[0].value;
@@ -50,11 +65,9 @@ $(function () {
             $(this).removeClass(activeClass);
         }
 
-    });
+    };
 
-    var move = true;
-    var handle;
-    $('.btn-start').click(function (e) {
+    function startAll() {
         try {
             $(this).addClass(activeClass);
             handle = setInterval(function () {
@@ -67,23 +80,7 @@ $(function () {
         catch (e) {
             $(this).removeClass(activeClass);
         }
-    });
-
-    $('.btn-stop').click(function (e) {
-        try {
-            $(this).addClass(activeClass);
-            clearInterval(handle);
-            handle = 0;
-            socket.emit('stopall'); //stopall event
-            console.log("Stop all");
-            $(this).removeClass(activeClass);
-            $('.btn-start').removeClass(activeClass);
-            $('.btn-init').removeClass(activeClass);
-        }
-        catch (e) {
-            $(this).removeClass(activeClass);
-        }
-    });
+    };
 
     function forward(motorNumber) {
         try {
@@ -113,6 +110,22 @@ $(function () {
             console.log("stop motor " + motorNumber);
         }
         catch (e) { }
+    };
+
+    function stopAll() {
+        try {
+            $(this).addClass(activeClass);
+            clearInterval(handle);
+            handle = 0;
+            socket.emit('stopall'); //stopall event
+            console.log("Stop all");
+            $(this).removeClass(activeClass);
+            $('.btn-start').removeClass(activeClass);
+            $('.btn-init').removeClass(activeClass);
+        }
+        catch (e) {
+            $(this).removeClass(activeClass);
+        }
     };
 
 });
