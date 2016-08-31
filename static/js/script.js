@@ -22,7 +22,7 @@ $(function () {
             params1.pin2 = $('#m1-pin2')[0].value;
             params1.speed = $('#m1-speed')[0].value;
             params1.steps = $('#m1-steps')[0].value;
-            params1.clip = $('#m1-clip')[0].value;
+            params1.clip = 0;
             params1.direction = $('#m1-direction')[0].value;
 
             params2.rpm = $('#m2-rpm')[0].value;
@@ -30,7 +30,7 @@ $(function () {
             params2.pin2 = $('#m2-pin2')[0].value;
             params2.speed = $('#m2-speed')[0].value;
             params2.steps = $('#m2-steps')[0].value;
-            params2.clip = $('#m2-clip')[0].value;
+            params2.clip = 0;
             params2.direction = $('#m2-direction')[0].value;
 
             params3.rpm = $('#m3-rpm')[0].value;
@@ -38,7 +38,7 @@ $(function () {
             params3.pin2 = $('#m3-pin2')[0].value;
             params3.speed = $('#m3-speed')[0].value;
             params3.steps = $('#m3-steps')[0].value;
-            params3.clip = $('#m3-clip')[0].value;
+            params3.clip = 0;
             params3.direction = $('#m3-direction')[0].value;
             //console.log(params);
 

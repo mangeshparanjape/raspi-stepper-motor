@@ -53,8 +53,8 @@ var controller = {
     },
     params2: {
         rpm: 200,
-        pin1: 23,
-        pin2: 24,
+        pin1: 27,
+        pin2: 22,
         speed: 60,
         steps: 100,
         clip: 0,
@@ -62,8 +62,8 @@ var controller = {
     },
     params3: {
         rpm: 200,
-        pin1: 23,
-        pin2: 24,
+        pin1: 17,
+        pin2: 18,
         speed: 60,
         steps: 100,
         clip: 0,
@@ -261,5 +261,5 @@ io.sockets.on('connection', function (socket) {
     });
 });
 
-//test code: we initialise the motor controller
+//test code: we initialise the motor controller1
 //controller.init();
