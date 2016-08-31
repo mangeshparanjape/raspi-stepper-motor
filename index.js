@@ -71,9 +71,9 @@ var controller = {
     },
 
     init: function (pr1, pr2, pr3) {
-        motor1=null;
-        motor2=null;
-        motor3=null;
+        motor1 = null;
+        motor2 = null;
+        motor3 = null;
         if (pr1) {
             this.params1.rpm = parseInt(pr1.rpm, 10);
             this.params1.pin1 = parseInt(pr1.pin1, 10);
@@ -122,12 +122,12 @@ var controller = {
             if (motorNumber == "1") {
                 motor1.step(this.params1.steps, function () {
                 });
-               
+
             }
             if (motorNumber == "2") {
                 motor2.step(this.params2.steps, function () {
                 });
-                
+
             }
         }
         catch (e) {
@@ -157,27 +157,62 @@ var controller = {
         }
     },
 
-    stop: function () {
+    stop: function (motorNumber) {
+        if (motorNumber == "1") {
+            try {
+                console.log("Stop  motor 1");
+                motor1.stop();
+
+            }
+            catch (e) {
+                console.log("Stop motor 1 error - " + e);
+            }
+        }
+
+        if (motorNumber == "2") {
+            try {
+                console.log("Stop motor 2");
+
+                motor2.stop();
+
+            }
+            catch (e) {
+                console.log("Stop motor 2 error - " + e);
+            }
+        }
+
+        if (motorNumber == "3") {
+            try {
+                console.log("Stop motor 3");
+
+                motor3.stop();
+            }
+            catch (e) {
+                console.log("Stop motor 3 error - " + e);
+            }
+        }
+    },
+    stopAll: function () {
         try {
             console.log("Stop  motor 1");
             motor1.stop();
-           
+
         }
         catch (e) {
             console.log("Stop motor 1 error - " + e);
         }
         try {
             console.log("Stop motor 2");
-           
+
             motor2.stop();
-           
+
         }
         catch (e) {
             console.log("Stop motor 2 error - " + e);
         }
         try {
             console.log("Stop motor 3");
-           
+
             motor3.stop();
         }
         catch (e) {
@@ -210,14 +245,19 @@ io.sockets.on('connection', function (socket) {
                 break;
         }
     });
-    socket.on('init', function (params1,params2,params3) {
-        controller.init(params1,params2,params3);
+    socket.on('init', function (params1, params2, params3) {
+        controller.init(params1, params2, params3);
         //console.log(params);
     });
     //we listen to the stop signal
-    socket.on('stop', function () {
+    socket.on('stop', function (motorNumber) {
         console.log("Stop event fired");
-        controller.stop();
+        controller.stop(motorNumber);
+    });
+
+    socket.on('stopall', function () {
+        console.log("Stop event fired");
+        controller.stopAll();
     });
 });
 
