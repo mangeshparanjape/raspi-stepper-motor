@@ -74,7 +74,8 @@ $(function () {
             $(this).addClass(activeClass);
             clearInterval(handle);
             handle = 0;
-            socket.emit('stopall');
+            socket.emit('stopall'); //stopall event
+            console.log("Stop all");
             $(this).removeClass(activeClass);
             $('.btn-start').removeClass(activeClass);
             $('.btn-init').removeClass(activeClass);

@@ -249,7 +249,7 @@ io.sockets.on('connection', function (socket) {
         controller.init(params1, params2, params3);
         //console.log(params);
     });
-    //we listen to the stop signal
+    //we listen to the stop signal1
     socket.on('stop', function (motorNumber) {
         console.log("Stop event fired");
         controller.stop(motorNumber);
