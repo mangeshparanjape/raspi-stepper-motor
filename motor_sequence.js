@@ -110,7 +110,7 @@ var controller = {
         console.log("set motor speed");
     },
 
-    forward: function (motorNumber) {
+    forward: function (motorNumber, cb) {
         try {
             if (motorNumber == "3") {
                 motor3.step(this.params3.steps, function () {
@@ -125,15 +125,16 @@ var controller = {
             if (motorNumber == "2") {
                 motor2.step(this.params2.steps, function () {
                 });
-
             }
+            cb(true);
         }
         catch (e) {
             console.log(e);
+            cb(false);
         }
     },
 
-    backward: function (motorNumber) {
+    backward: function (motorNumber, cb) {
         try {
             if (motorNumber == "3") {
                 motor.step((this.params3.steps * -1), function () {
@@ -148,15 +149,58 @@ var controller = {
                 motor2.step((this.params2.steps * -1), function () {
                 });
             }
-
+            cb(true);
         }
         catch (e) {
             console.log(e);
+            cb(false);
         }
     },
 
-    stop: function (motorNumber) {
-        if (motorNumber == "1") {
+    stop: function (motorNumber, cb) {
+        try {
+            if (motorNumber == "1") {
+                try {
+                    console.log("Stop  motor 1");
+                    motor1.stop();
+
+                }
+                catch (e) {
+
+                    console.log("Stop motor 1 error - " + e);
+                }
+            }
+
+            if (motorNumber == "2") {
+                try {
+                    console.log("Stop motor 2");
+
+                    motor2.stop();
+
+                }
+                catch (e) {
+                    console.log("Stop motor 2 error - " + e);
+                }
+            }
+
+            if (motorNumber == "3") {
+                try {
+                    console.log("Stop motor 3");
+
+                    motor3.stop();
+                }
+                catch (e) {
+                    console.log("Stop motor 3 error - " + e);
+                }
+            }
+            cb(true);
+        }
+        catch (e) {
+            cb(false);
+        }
+    },
+    stopAll: function (cb) {
+        try {
             try {
                 console.log("Stop  motor 1");
                 motor1.stop();
@@ -165,9 +209,6 @@ var controller = {
             catch (e) {
                 console.log("Stop motor 1 error - " + e);
             }
-        }
-
-        if (motorNumber == "2") {
             try {
                 console.log("Stop motor 2");
 
@@ -177,9 +218,6 @@ var controller = {
             catch (e) {
                 console.log("Stop motor 2 error - " + e);
             }
-        }
-
-        if (motorNumber == "3") {
             try {
                 console.log("Stop motor 3");
 
@@ -188,33 +226,10 @@ var controller = {
             catch (e) {
                 console.log("Stop motor 3 error - " + e);
             }
-        }
-    },
-    stopAll: function () {
-        try {
-            console.log("Stop  motor 1");
-            motor1.stop();
-
+            cb(true);
         }
         catch (e) {
-            console.log("Stop motor 1 error - " + e);
-        }
-        try {
-            console.log("Stop motor 2");
-
-            motor2.stop();
-
-        }
-        catch (e) {
-            console.log("Stop motor 2 error - " + e);
-        }
-        try {
-            console.log("Stop motor 3");
-
-            motor3.stop();
-        }
-        catch (e) {
-            console.log("Stop motor 3 error - " + e);
+            cb(false);
         }
     },
 
@@ -250,14 +265,14 @@ var _breathLoop = function (cb) {
     console.log("Breathing start");
     breathHandle = setInterval(
         _breathing,
-        5000,
+        20000,
         cb
     )
 };
 
 var _breathing = function (cb) {
     //console.log("Breathing start");
-    setTimeout(function () {
+    /*setTimeout(function () {
         console.log("breath out");
         if(!dryRun) controller.forward(3);
     }, 3000);
@@ -270,7 +285,12 @@ var _breathing = function (cb) {
     setTimeout(function () {
         //breath loop check
         _breathLoopTest(cb);
-    }, 9000);
+    }, 9000);*/
+    if (!dryRun) controller.forward(3, function () {
+        controller.backward(3, function () {
+            _breathLoopTest(cb);
+        });
+    });
 }
 
 var _breathLoopTest = function (cb) {
@@ -284,42 +304,56 @@ var _breathLoopTest = function (cb) {
 };
 
 var _moveUp = function (cb) {
-    setTimeout(function () {
+    /*setTimeout(function () {
         console.log("Move Up");
         if(!dryRun) controller.forward(1);
         cb(true);
-    }, 5000);
-
-    setTimeout(function () {
-       console.log("wait after move up");
-    }, 10000);
-
+    }, 5000);*/
+    if (!dryRun) controller.forward(1, function () {
+        setTimeout(function () {
+            console.log("wait after move up");
+        }, 10000);
+    });
 };
 
 var _moveNeck = function (cb) {
-    setTimeout(function () {
+    /*setTimeout(function () {
         console.log("Move neck left");
-        if(!dryRun) controller.forward(2);
+        if (!dryRun) controller.forward(2);
     }, 5000);
     setTimeout(function () {
         console.log("wait after neck left");
     }, 10000);
     setTimeout(function () {
         console.log("Move neck right");
-        if(!dryRun) controller.backward(2);
+        if (!dryRun) controller.backward(2);
         cb(true);
     }, 15000);
     setTimeout(function () {
         console.log("wait after neck right");
-    }, 20000);
+    }, 20000);*/
+    console.log("Move neck left");
+    if (!dryRun) controller.forward(2, function () {
+        console.log("wait after neck left");
+        setTimeout(function () {
+            console.log("Move neck right");
+            controller.backward(2, function () {
+                setTimeout(function () {
+                    console.log("wait after neck right");
+                }, 20000);
+            });
+        }, 10000);
+    });
+
 };
 
 var _moveDown = function (cb) {
-    setTimeout(function () {
+    /*setTimeout(function () {
         console.log("Move down");
-        if(!dryRun) controller.backward(1);
+        if (!dryRun) controller.backward(1);
         cb(true);
-    }, 8000);
+    }, 8000);*/
+    if (!dryRun) controller.backward(1);
 };
 
 ee.on("restart", function () {
@@ -334,5 +368,5 @@ ee.on("stopAll", function () {
 
 exports.sequenceLoop = sequenceLoop;
 exports.stopAll = stopAll;
-exports.controller=controller;
+exports.controller = controller;
 
