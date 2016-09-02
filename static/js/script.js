@@ -4,6 +4,9 @@ $(function () {
             initMotor: $('.btn-init'),
             startMotor: $('.btn-start'),
             stopMotor: $('.btn-stop'),
+            moveMotor1: $('.btn-move1'),
+            moveMotor2: $('.btn-move2'),
+            moveMotor3: $('.btn-move3'),
             all: $('.btn')
         },
         params1 = {},
@@ -14,6 +17,7 @@ $(function () {
         isStopped = true,
         move = true,
         handle;
+        moveMotor=true;
 
     //we listen to key pressing
     $('.btn-init').click(function (e) {
@@ -27,6 +31,18 @@ $(function () {
 
     $('.btn-stop').click(function (e) {
         stopAll(this);
+    });
+
+    $('.btn-move1').click(function (e) {
+        moveMotors("1",this);
+    });
+
+    $('.btn-move2').click(function (e) {
+        moveMotors("2",this);
+    });
+
+    $('.btn-move3').click(function (e) {
+        moveMotors("3",this);
     });
 
     function startSequence(t) {
@@ -82,6 +98,30 @@ $(function () {
 
     };
 
+    function moveMotors(motorNumber,t){
+        try{
+            var dir="forward";
+            if(moveMotor){
+                dir="backward";
+                moveMotor=false;
+            } 
+            else{
+                dir="forward";
+                moveMotor=true;
+            }
+            $(t).addClass(activeClass);
+            console.log("move motor " + motorNumber);
+            socket.emit('move',dir, motorNumber, function () {
+                console.log("motor start");
+                $(t).removeClass(activeClass);
+            });
+        } 
+        catch(e){
+            $(t).removeClass(activeClass);
+            console.log(e);
+        }
+
+    };
     function forward(motorNumber) {
         try {
             socket.emit('move', 'forward', motorNumber);

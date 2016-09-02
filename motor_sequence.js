@@ -353,9 +353,9 @@ var _moveNeck = function (cb) {
     setTimeout(function () {
         console.log("Move neck right");
         controller.backward(2, motorCallback);
-        cb(true);
     }, 15000);
     setTimeout(function () {
+        cb(true);
         console.log("wait after neck right");
     }, 20000);
     /*console.log("Move neck left");
