@@ -114,9 +114,10 @@ var controller = {
         try {
             if (!dryRun) {
                 if (motorNumber == "3") {
+                    omxp.open(clip, opts);
                     motor3.step(this.params3.steps, function () {
                     });
-                    omxp.open(clip, opts);
+                    
                 }
                 if (motorNumber == "1") {
                     motor1.step(this.params1.steps, function () {
@@ -128,12 +129,13 @@ var controller = {
                     });
                 }
             }
-            cb(true);
+            
         }
         catch (e) {
             console.log(e);
-            cb(false);
+           
         }
+        cb(true);
     },
 
     backward: function (motorNumber, cb) {
@@ -153,12 +155,13 @@ var controller = {
                     });
                 }
             }
-            cb(true);
+            
         }
         catch (e) {
             console.log(e);
-            cb(false);
+            
         }
+        cb(true);
     },
 
     stop: function (motorNumber, cb) {
@@ -199,11 +202,12 @@ var controller = {
                     }
                 }
             }
-            cb(true);
+            
         }
         catch (e) {
-            cb(false);
+            
         }
+        cb(true);
     },
     stopAll: function (cb) {
         try {
@@ -234,11 +238,12 @@ var controller = {
                     console.log("Stop motor 3 error - " + e);
                 }
             }
-            cb(true);
+            
         }
         catch (e) {
-            cb(false);
+            
         }
+        cb(true);
     },
 
     playMusic: function () {
@@ -273,28 +278,29 @@ var _breathLoop = function (cb) {
     console.log("Breathing start");
     breathHandle = setInterval(
         _breathing,
-        7000,
+        10000,
         cb
     )
 };
 
 var _breathing = function (cb) {
     //console.log("Breathing start");
-    /*setTimeout(function () {
+    setTimeout(function () {
         console.log("breath out");
-        if(!dryRun) controller.forward(3);
+        controller.forward(3);
     }, 3000);
 
     setTimeout(function () {
         console.log("breath in");
-        if(!dryRun) controller.backward(3);
+        controller.backward(3);
     }, 6000);
 
     setTimeout(function () {
         //breath loop check
         _breathLoopTest(cb);
-    }, 9000);*/
-    console.log("breath out");
+    }, 9000);
+
+    /*console.log("breath out");
     setTimeout(function () {
         controller.forward(3, function () {
             console.log("breath in");
@@ -305,7 +311,7 @@ var _breathing = function (cb) {
             }, 6000);
 
         });
-    }, 3000);
+    }, 3000);*/
 
     _breathLoopTest(cb);
 }
@@ -321,37 +327,37 @@ var _breathLoopTest = function (cb) {
 };
 
 var _moveUp = function (cb) {
-    /*setTimeout(function () {
+    setTimeout(function () {
         console.log("Move Up");
-        if(!dryRun) controller.forward(1);
+        controller.forward(1);
         cb(true);
-    }, 5000);*/
-    console.log("Move Up");
+    }, 5000);
+    /*console.log("Move Up");
     controller.forward(1, function () {
         setTimeout(function () {
             console.log("wait after move up");
             cb(true);
         }, 10000);
-    });
+    });*/
 };
 
 var _moveNeck = function (cb) {
-    /*setTimeout(function () {
+    setTimeout(function () {
         console.log("Move neck left");
-        if (!dryRun) controller.forward(2);
+        controller.forward(2);
     }, 5000);
     setTimeout(function () {
         console.log("wait after neck left");
     }, 10000);
     setTimeout(function () {
         console.log("Move neck right");
-        if (!dryRun) controller.backward(2);
+        controller.backward(2);
         cb(true);
     }, 15000);
     setTimeout(function () {
         console.log("wait after neck right");
-    }, 20000);*/
-    console.log("Move neck left");
+    }, 20000);
+    /*console.log("Move neck left");
     controller.forward(2, function () {
         console.log("wait after neck left");
         setTimeout(function () {
@@ -363,14 +369,14 @@ var _moveNeck = function (cb) {
                 }, 15000);
             });
         }, 10000);
-    });
+    });*/
 
 };
 
 var _moveDown = function (cb) {
     setTimeout(function () {
         console.log("Move down");
-        if (!dryRun) controller.backward(1);
+        controller.backward(1);
         cb(true);
     }, 5000);
 
