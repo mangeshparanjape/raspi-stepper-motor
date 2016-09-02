@@ -8,7 +8,8 @@ var async = require("async"),
     stepperWiringpi = require('stepper-wiringpi'),
     omxp = require('omxplayer-controll'),
     clip = '/home/stepper-ctrl/raspi-stepper-motor/sound/SnoringMale.mp3',
-    soundClip = __dirname + '/sound/SnoringMale.mp3';
+    soundClip = __dirname + '/sound/SnoringMale.mp3',
+    dryRun = true;
 
 //motor and music functions
 var opts = {
@@ -258,18 +259,18 @@ var _breathing = function (cb) {
     //console.log("Breathing start");
     setTimeout(function () {
         console.log("breath out");
-        //controller.forward(3);
+        if(!dryRun) controller.forward(3);
     }, 3000);
 
     setTimeout(function () {
         console.log("breath in");
-        //controller.backward(3);
-    }, 3000);
+        if(!dryRun) controller.backward(3);
+    }, 6000);
 
     setTimeout(function () {
         //breath loop check
         _breathLoopTest(cb);
-    }, 3000);
+    }, 9000);
 }
 
 var _breathLoopTest = function (cb) {
@@ -285,7 +286,7 @@ var _breathLoopTest = function (cb) {
 var _moveUp = function (cb) {
     setTimeout(function () {
         console.log("Move Up");
-        //controller.forward(1);
+        if(!dryRun) controller.forward(1);
         cb(true);
     }, 5000);
 
@@ -298,25 +299,25 @@ var _moveUp = function (cb) {
 var _moveNeck = function (cb) {
     setTimeout(function () {
         console.log("Move neck left");
-        //controller.forward(2);
+        if(!dryRun) controller.forward(2);
     }, 5000);
     setTimeout(function () {
         console.log("wait after neck left");
-    }, 9000);
+    }, 10000);
     setTimeout(function () {
         console.log("Move neck right");
-        //controller.backward(2);
+        if(!dryRun) controller.backward(2);
         cb(true);
-    }, 14000);
+    }, 15000);
     setTimeout(function () {
         console.log("wait after neck right");
-    }, 19000);
+    }, 20000);
 };
 
 var _moveDown = function (cb) {
     setTimeout(function () {
         console.log("Move down");
-        //controller.backward(1);
+        if(!dryRun) controller.backward(1);
         cb(true);
     }, 8000);
 };
