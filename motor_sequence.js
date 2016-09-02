@@ -112,19 +112,21 @@ var controller = {
 
     forward: function (motorNumber, cb) {
         try {
-            if (motorNumber == "3") {
-                motor3.step(this.params3.steps, function () {
-                });
-                omxp.open(clip, opts);
-            }
-            if (motorNumber == "1") {
-                motor1.step(this.params1.steps, function () {
-                });
+            if (!dryRun) {
+                if (motorNumber == "3") {
+                    motor3.step(this.params3.steps, function () {
+                    });
+                    omxp.open(clip, opts);
+                }
+                if (motorNumber == "1") {
+                    motor1.step(this.params1.steps, function () {
+                    });
 
-            }
-            if (motorNumber == "2") {
-                motor2.step(this.params2.steps, function () {
-                });
+                }
+                if (motorNumber == "2") {
+                    motor2.step(this.params2.steps, function () {
+                    });
+                }
             }
             cb(true);
         }
@@ -136,18 +138,20 @@ var controller = {
 
     backward: function (motorNumber, cb) {
         try {
-            if (motorNumber == "3") {
-                motor.step((this.params3.steps * -1), function () {
-                });
-                omxp.open(clip, opts);
-            }
-            if (motorNumber == "1") {
-                motor1.step((this.params1.steps * -1), function () {
-                });
-            }
-            if (motorNumber == "2") {
-                motor2.step((this.params2.steps * -1), function () {
-                });
+            if (!dryRun) {
+                if (motorNumber == "3") {
+                    motor.step((this.params3.steps * -1), function () {
+                    });
+                    omxp.open(clip, opts);
+                }
+                if (motorNumber == "1") {
+                    motor1.step((this.params1.steps * -1), function () {
+                    });
+                }
+                if (motorNumber == "2") {
+                    motor2.step((this.params2.steps * -1), function () {
+                    });
+                }
             }
             cb(true);
         }
@@ -159,38 +163,40 @@ var controller = {
 
     stop: function (motorNumber, cb) {
         try {
-            if (motorNumber == "1") {
-                try {
-                    console.log("Stop  motor 1");
-                    motor1.stop();
+            if (!dryRun) {
+                if (motorNumber == "1") {
+                    try {
+                        console.log("Stop  motor 1");
+                        motor1.stop();
 
+                    }
+                    catch (e) {
+
+                        console.log("Stop motor 1 error - " + e);
+                    }
                 }
-                catch (e) {
 
-                    console.log("Stop motor 1 error - " + e);
+                if (motorNumber == "2") {
+                    try {
+                        console.log("Stop motor 2");
+
+                        motor2.stop();
+
+                    }
+                    catch (e) {
+                        console.log("Stop motor 2 error - " + e);
+                    }
                 }
-            }
 
-            if (motorNumber == "2") {
-                try {
-                    console.log("Stop motor 2");
+                if (motorNumber == "3") {
+                    try {
+                        console.log("Stop motor 3");
 
-                    motor2.stop();
-
-                }
-                catch (e) {
-                    console.log("Stop motor 2 error - " + e);
-                }
-            }
-
-            if (motorNumber == "3") {
-                try {
-                    console.log("Stop motor 3");
-
-                    motor3.stop();
-                }
-                catch (e) {
-                    console.log("Stop motor 3 error - " + e);
+                        motor3.stop();
+                    }
+                    catch (e) {
+                        console.log("Stop motor 3 error - " + e);
+                    }
                 }
             }
             cb(true);
@@ -201,30 +207,32 @@ var controller = {
     },
     stopAll: function (cb) {
         try {
-            try {
-                console.log("Stop  motor 1");
-                motor1.stop();
+            if (!dryRun) {
+                try {
+                    console.log("Stop  motor 1");
+                    motor1.stop();
 
-            }
-            catch (e) {
-                console.log("Stop motor 1 error - " + e);
-            }
-            try {
-                console.log("Stop motor 2");
+                }
+                catch (e) {
+                    console.log("Stop motor 1 error - " + e);
+                }
+                try {
+                    console.log("Stop motor 2");
 
-                motor2.stop();
+                    motor2.stop();
 
-            }
-            catch (e) {
-                console.log("Stop motor 2 error - " + e);
-            }
-            try {
-                console.log("Stop motor 3");
+                }
+                catch (e) {
+                    console.log("Stop motor 2 error - " + e);
+                }
+                try {
+                    console.log("Stop motor 3");
 
-                motor3.stop();
-            }
-            catch (e) {
-                console.log("Stop motor 3 error - " + e);
+                    motor3.stop();
+                }
+                catch (e) {
+                    console.log("Stop motor 3 error - " + e);
+                }
             }
             cb(true);
         }
@@ -286,11 +294,14 @@ var _breathing = function (cb) {
         //breath loop check
         _breathLoopTest(cb);
     }, 9000);*/
-    if (!dryRun) controller.forward(3, function () {
+    console.log("breath out");
+    controller.forward(3, function () {
+        console.log("breath in");
         controller.backward(3, function () {
-            _breathLoopTest(cb);
+
         });
     });
+    _breathLoopTest(cb);
 }
 
 var _breathLoopTest = function (cb) {
@@ -309,7 +320,8 @@ var _moveUp = function (cb) {
         if(!dryRun) controller.forward(1);
         cb(true);
     }, 5000);*/
-    if (!dryRun) controller.forward(1, function () {
+    console.log("Move Up");
+    controller.forward(1, function () {
         setTimeout(function () {
             console.log("wait after move up");
             cb(true);
@@ -334,7 +346,7 @@ var _moveNeck = function (cb) {
         console.log("wait after neck right");
     }, 20000);*/
     console.log("Move neck left");
-    if (!dryRun) controller.forward(2, function () {
+    controller.forward(2, function () {
         console.log("wait after neck left");
         setTimeout(function () {
             console.log("Move neck right");
@@ -355,7 +367,7 @@ var _moveDown = function (cb) {
         if (!dryRun) controller.backward(1);
         cb(true);
     }, 8000);*/
-    if (!dryRun) controller.backward(1, function(){
+    controller.backward(1, function () {
         cb(true);
     });
 };
