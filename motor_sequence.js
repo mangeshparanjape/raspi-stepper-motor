@@ -142,9 +142,10 @@ var controller = {
         try {
             if (!dryRun) {
                 if (motorNumber == "3") {
-                    motor.step((this.params3.steps * -1), function () {
-                    });
                     omxp.open(clip, opts);
+                    motor3.step((this.params3.steps * -1), function () {
+                    });
+                    
                 }
                 if (motorNumber == "1") {
                     motor1.step((this.params1.steps * -1), function () {
