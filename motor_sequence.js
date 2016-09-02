@@ -246,6 +246,7 @@ var _sequenceStart = function () {
 
 var _breathLoop = function (cb) {
     //breathing
+    console.log("Breathing start");
     breathHandle = setInterval(
         _breathing,
         5000,
@@ -254,14 +255,16 @@ var _breathLoop = function (cb) {
 };
 
 var _breathing = function (cb) {
-    console.log("Breathing start");
+    //console.log("Breathing start");
     setTimeout(function () {
-        console.log("b in");
-    }, 1000);
+        console.log("breath out");
+        controller.forward(3);
+    }, 3000);
 
     setTimeout(function () {
-        console.log("b out");
-    }, 2000);
+        console.log("breath in");
+        controller.backward(3);
+    }, 3000);
 
     setTimeout(function () {
         //breath loop check
@@ -272,7 +275,7 @@ var _breathing = function (cb) {
 var _breathLoopTest = function (cb) {
     bCount++;
     console.log(bCount);
-    if (bCount == 2 | stopAll) {
+    if (bCount == 5 | stopAll) {
         clearInterval(breathHandle);
         breathHandle = 0;
         cb(true);
@@ -282,29 +285,41 @@ var _breathLoopTest = function (cb) {
 var _moveUp = function (cb) {
     setTimeout(function () {
         console.log("Move Up");
+        controller.stop(3);
+        controller.forward(1);
         cb(true);
-    }, 2000);
+    }, 5000);
+
+    setTimeout(function () {
+       console.log("wait after move up");
+    }, 10000);
 
 };
 
 var _moveNeck = function (cb) {
     setTimeout(function () {
         console.log("Move neck left");
-    }, 2000);
+        forward(2);
+    }, 5000);
+    setTimeout(function () {
+        console.log("wait after neck left");
+    }, 9000);
     setTimeout(function () {
         console.log("Move neck right");
-    }, 4000);
-    setTimeout(function () {
-        console.log("Move neck center");
+        backward(2);
         cb(true);
-    }, 6000);
+    }, 14000);
+    setTimeout(function () {
+        console.log("wait after neck right");
+    }, 19000);
 };
 
 var _moveDown = function (cb) {
     setTimeout(function () {
         console.log("Move down");
+        controller.backward(1);
         cb(true);
-    }, 2000);
+    }, 8000);
 };
 
 ee.on("restart", function () {

@@ -36,18 +36,18 @@ io.sockets.on('connection', function (socket) {
 
     socket.on('stop', function (motorNumber) {
         console.log("Stop event fired");
-        controller.stop(motorNumber);
+        motor_sequence.controller.stop(motorNumber);
     });
 
     socket.on('move', function (direction, motorNumber) {
         switch (direction) {
             case 'forward':
                 console.log("Forward");
-                controller.forward(motorNumber);
+                motor_sequence.controller.forward(motorNumber);
                 break;
             case 'backward':
                 console.log("Backward");
-                controller.backward(motorNumber);
+                motor_sequence.controller.backward(motorNumber);
                 break;
         }
     });
