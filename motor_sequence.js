@@ -9,7 +9,7 @@ var async = require("async"),
     omxp = require('omxplayer-controll'),
     clip = '/home/stepper-ctrl/raspi-stepper-motor/sound/SnoringMale.mp3',
     soundClip = __dirname + '/sound/SnoringMale.mp3',
-    dryRun = true;
+    dryRun = false;
 
 //motor and music functions
 var opts = {
@@ -313,7 +313,7 @@ var _breathing = function (cb) {
 var _breathLoopTest = function (cb) {
     bCount++;
     console.log(bCount);
-    if (bCount == 5 | stopAll) {
+    if (bCount == 2 | stopAll) {
         clearInterval(breathHandle);
         breathHandle = 0;
         cb(true);
@@ -360,7 +360,7 @@ var _moveNeck = function (cb) {
                 setTimeout(function () {
                     console.log("wait after neck right");
                     cb(true);
-                }, 20000);
+                }, 15000);
             });
         }, 10000);
     });
@@ -372,7 +372,7 @@ var _moveDown = function (cb) {
         console.log("Move down");
         if (!dryRun) controller.backward(1);
         cb(true);
-    }, 8000);
+    }, 5000);
 
    /* console.log("Move down");
     controller.backward(1, function () {
