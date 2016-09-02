@@ -5,11 +5,16 @@ var async = require("async"),
     breathHandle = 0,
     EventEmitter = require("events").EventEmitter,
     ee = new EventEmitter(),
-    stepperWiringpi = require('stepper-wiringpi'),
-    omxp = require('omxplayer-controll'),
     clip = '/home/stepper-ctrl/raspi-stepper-motor/sound/SnoringMale.mp3',
     soundClip = __dirname + '/sound/SnoringMale.mp3',
-    dryRun = false;
+    dryRun = true,
+    stepperWiringpi,
+    omxp; 
+
+    if(!dryRun){
+        stepperWiringpi = require('stepper-wiringpi');
+        omxp = require('omxplayer-controll');
+    }
 
 //motor and music functions
 var opts = {
@@ -22,10 +27,11 @@ var opts = {
     'startAt': 0, //default: 0 
     'startVolume': 0.8 //0.0 ... 1.0 default: 1.0 
 };
-omxp.on('finish', function () {
+
+/*omxp.on('finish', function () {
     console.log('============= Finished =============');
     //omxp.open(clip, opts);
-});
+});*/
 
 var sequenceLoop = function () {
     stopAll = false;
@@ -69,45 +75,47 @@ var controller = {
     },
 
     init: function (pr1, pr2, pr3) {
-        motor1 = null;
-        motor2 = null;
-        motor3 = null;
-        if (pr1) {
-            this.params1.rpm = parseInt(pr1.rpm, 10);
-            this.params1.pin1 = parseInt(pr1.pin1, 10);
-            this.params1.pin2 = parseInt(pr1.pin2, 10);
-            this.params1.speed = parseInt(pr1.speed, 10);
-            this.params1.steps = parseInt(pr1.steps, 10);
-            this.params1.clip = pr1.clip;
-            this.params1.direction = pr1.direction;
-        }
-        if (pr2) {
-            this.params2.rpm = parseInt(pr2.rpm, 10);
-            this.params2.pin1 = parseInt(pr2.pin1, 10);
-            this.params2.pin2 = parseInt(pr2.pin2, 10);
-            this.params2.speed = parseInt(pr2.speed, 10);
-            this.params2.steps = parseInt(pr2.steps, 10);
-            this.params2.clip = pr2.clip;
-            this.params2.direction = pr2.direction;
-        }
-        if (pr3) {
-            this.params3.rpm = parseInt(pr3.rpm, 10);
-            this.params3.pin1 = parseInt(pr3.pin1, 10);
-            this.params3.pin2 = parseInt(pr3.pin2, 10);
-            this.params3.speed = parseInt(pr3.speed, 10);
-            this.params3.steps = parseInt(pr3.steps, 10);
-            this.params3.clip = pr3.clip;
-            this.params3.direction = pr3.direction;
-        }
-        motor1 = stepperWiringpi.setup(this.params1.rpm, this.params1.pin1, this.params1.pin2);
-        motor1.setSpeed(this.params1.speed);
-        motor2 = stepperWiringpi.setup(this.params2.rpm, this.params2.pin1, this.params2.pin2);
-        motor2.setSpeed(this.params2.speed);
-        motor3 = stepperWiringpi.setup(this.params3.rpm, this.params3.pin1, this.params3.pin2);
-        motor3.setSpeed(this.params3.speed);
+        if (!dryRun) {
+            motor1 = null;
+            motor2 = null;
+            motor3 = null;
+            if (pr1) {
+                this.params1.rpm = parseInt(pr1.rpm, 10);
+                this.params1.pin1 = parseInt(pr1.pin1, 10);
+                this.params1.pin2 = parseInt(pr1.pin2, 10);
+                this.params1.speed = parseInt(pr1.speed, 10);
+                this.params1.steps = parseInt(pr1.steps, 10);
+                this.params1.clip = pr1.clip;
+                this.params1.direction = pr1.direction;
+            }
+            if (pr2) {
+                this.params2.rpm = parseInt(pr2.rpm, 10);
+                this.params2.pin1 = parseInt(pr2.pin1, 10);
+                this.params2.pin2 = parseInt(pr2.pin2, 10);
+                this.params2.speed = parseInt(pr2.speed, 10);
+                this.params2.steps = parseInt(pr2.steps, 10);
+                this.params2.clip = pr2.clip;
+                this.params2.direction = pr2.direction;
+            }
+            if (pr3) {
+                this.params3.rpm = parseInt(pr3.rpm, 10);
+                this.params3.pin1 = parseInt(pr3.pin1, 10);
+                this.params3.pin2 = parseInt(pr3.pin2, 10);
+                this.params3.speed = parseInt(pr3.speed, 10);
+                this.params3.steps = parseInt(pr3.steps, 10);
+                this.params3.clip = pr3.clip;
+                this.params3.direction = pr3.direction;
+            }
+            motor1 = stepperWiringpi.setup(this.params1.rpm, this.params1.pin1, this.params1.pin2);
+            motor1.setSpeed(this.params1.speed);
+            motor2 = stepperWiringpi.setup(this.params2.rpm, this.params2.pin1, this.params2.pin2);
+            motor2.setSpeed(this.params2.speed);
+            motor3 = stepperWiringpi.setup(this.params3.rpm, this.params3.pin1, this.params3.pin2);
+            motor3.setSpeed(this.params3.speed);
 
-        console.log("create motor objects");
-        console.log("set motor speed");
+            console.log("create motor objects");
+            console.log("set motor speed");
+        }
     },
 
     forward: function (motorNumber, cb) {
@@ -117,7 +125,7 @@ var controller = {
                     omxp.open(clip, opts);
                     motor3.step(this.params3.steps, function () {
                     });
-                    
+
                 }
                 if (motorNumber == "1") {
                     motor1.step(this.params1.steps, function () {
@@ -129,11 +137,11 @@ var controller = {
                     });
                 }
             }
-            
+
         }
         catch (e) {
             console.log(e);
-           
+
         }
         cb(true);
     },
@@ -145,7 +153,7 @@ var controller = {
                     omxp.open(clip, opts);
                     motor3.step((this.params3.steps * -1), function () {
                     });
-                    
+
                 }
                 if (motorNumber == "1") {
                     motor1.step((this.params1.steps * -1), function () {
@@ -156,11 +164,11 @@ var controller = {
                     });
                 }
             }
-            
+
         }
         catch (e) {
             console.log(e);
-            
+
         }
         cb(true);
     },
@@ -203,10 +211,10 @@ var controller = {
                     }
                 }
             }
-            
+
         }
         catch (e) {
-            
+
         }
         cb(true);
     },
@@ -239,10 +247,10 @@ var controller = {
                     console.log("Stop motor 3 error - " + e);
                 }
             }
-            
+
         }
         catch (e) {
-            
+
         }
         cb(true);
     },
@@ -381,13 +389,13 @@ var _moveDown = function (cb) {
         cb(true);
     }, 5000);
 
-   /* console.log("Move down");
-    controller.backward(1, function () {
-        cb(true);
-    });*/
+    /* console.log("Move down");
+     controller.backward(1, function () {
+         cb(true);
+     });*/
 };
 
-var motorCallback = function (){
+var motorCallback = function () {
     console.log("cb");
 };
 

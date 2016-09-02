@@ -1,5 +1,6 @@
 $(function () {
-    var socket = io.connect(), //we connect by using a websocket
+    var socket = io.connect, //we connect by using a websocket
+        globalSocket = socket.connect('http://localhost:4000'),
         ui = {
             initMotor: $('.btn-init'),
             startMotor: $('.btn-start'),
@@ -16,8 +17,8 @@ $(function () {
         inactiveClass = 'is-inactive',
         isStopped = true,
         move = true,
-        handle;
-        moveMotor=true;
+        handle,
+        moveMotor = true;
 
     //we listen to key pressing
     $('.btn-init').click(function (e) {
@@ -34,26 +35,28 @@ $(function () {
     });
 
     $('.btn-move1').click(function (e) {
-        moveMotors("1",this);
+        moveMotors("1", this);
     });
 
     $('.btn-move2').click(function (e) {
-        moveMotors("2",this);
+        moveMotors("2", this);
     });
 
     $('.btn-move3').click(function (e) {
-        moveMotors("3",this);
+        moveMotors("3", this);
     });
 
     function startSequence(t) {
-        try{
+        try {
             $(t).addClass(activeClass);
             console.log("Sequence start");
-            socket.emit('sequence', function () {
+            /*socket.emit('sequence', function () {
                 console.log("sequence start");
-            });
-        } 
-        catch(e){
+            });*/
+            globalNotify('sequence',null);
+            console.log("sequence start");
+        }
+        catch (e) {
             $(t).removeClass(activeClass);
             console.log(e);
         }
@@ -88,9 +91,16 @@ $(function () {
             params3.direction = $('#m3-direction')[0].value;
             //console.log(params);
 
-            socket.emit('init', params1, params2, params3, function () {
+            /*socket.emit('init', params1, params2, params3, function () {
                 console.log("done");
-            });
+            });*/
+
+            var  evt = {};
+            evt.params1 = params1;
+            evt.params2 = params2;
+            evt.params3 = params3;
+            globalNotify('init',evt);
+            console.log("init");
         }
         catch (e) {
             $(t).removeClass(activeClass);
@@ -98,25 +108,31 @@ $(function () {
 
     };
 
-    function moveMotors(motorNumber,t){
-        try{
-            var dir="forward";
-            if(moveMotor){
-                dir="backward";
-                moveMotor=false;
-            } 
-            else{
-                dir="forward";
-                moveMotor=true;
+    function moveMotors(motorNumber, t) {
+        try {
+            var dir = "forward";
+            if (moveMotor) {
+                dir = "backward";
+                moveMotor = false;
+            }
+            else {
+                dir = "forward";
+                moveMotor = true;
             }
             $(t).addClass(activeClass);
             console.log("move motor " + motorNumber);
-            socket.emit('move',dir, motorNumber, function () {
+            /*socket.emit('move', dir, motorNumber, function () {
                 console.log("motor start");
                 $(t).removeClass(activeClass);
-            });
-        } 
-        catch(e){
+            });*/
+
+            var  evt = {};
+            evt.direction = dir;
+            evt.motorNumber = motorNumber;
+            globalNotify('move',evt);
+            console.log("move");
+        }
+        catch (e) {
             $(t).removeClass(activeClass);
             console.log(e);
         }
@@ -124,7 +140,13 @@ $(function () {
     };
     function forward(motorNumber) {
         try {
-            socket.emit('move', 'forward', motorNumber);
+            //socket.emit('move', 'forward', motorNumber);
+            var  evt = {};
+            evt.direction = "forward";
+            evt.motorNumber = motorNumber;
+            globalNotify('move',evt);
+            console.log("move");
+
             console.log("forward");
             setTimeout(function () {
                 backward(motorNumber);
@@ -135,7 +157,13 @@ $(function () {
 
     function backward(motorNumber) {
         try {
-            socket.emit('move', 'backward', motorNumber);
+            //socket.emit('move', 'backward', motorNumber);
+            var  evt = {};
+            evt.direction = "backward";
+            evt.motorNumber = motorNumber;
+            globalNotify('move',evt);
+            console.log("move");
+
             console.log("backwards");
         }
         catch (e) { }
@@ -146,7 +174,12 @@ $(function () {
 
     function stop(motorNumber) {
         try {
-            socket.emit('stop', motorNumber);
+            //socket.emit('stop', motorNumber);
+            var  evt = {};
+            evt.motorNumber = motorNumber;
+            globalNotify('stop',evt);
+            console.log("stop");
+
             console.log("stop motor " + motorNumber);
         }
         catch (e) { }
@@ -157,7 +190,11 @@ $(function () {
             $(t).addClass(activeClass);
             clearInterval(handle);
             handle = 0;
-            socket.emit('stopall'); //stopall event
+            
+            //socket.emit('stopall'); //stopall event
+            globalNotify('stopall',null);
+            console.log("stopall");
+
             console.log("Stop all");
             $(t).removeClass(activeClass);
             $('.btn-start').removeClass(activeClass);
@@ -168,5 +205,15 @@ $(function () {
             $(t).removeClass(activeClass);
         }
     };
-   
+
+    function globalNotify(evtName, evt) {
+        var dt = {};
+        dt.name = evtName;
+        dt.data = evt;
+
+        globalSocket.emit('EVT.notify', dt);
+
+        console.log('*** notifying for EVT event \'%s\': ', evtname, evt);
+    };
+
 });

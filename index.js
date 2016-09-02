@@ -3,7 +3,8 @@ var express = require('express'),
     path = require('path'),
     async = require('async'),
     app = express(),
-    motor_sequence = require('./motor_sequence');
+    motor_sequence = require('./motor_sequence'),
+    $$ ={};
 
 //we use the port 3000
 app.set('port', 3000);
@@ -19,9 +20,12 @@ var http = http.createServer(app).listen(app.get('port'), function () {
 //we initialise socket.io
 var io = require('socket.io')(http);
 
+$$.io = io;
+$$.motor_sequence=motor_sequence;
+
 //we listen to new connections
 io.sockets.on('connection', function (socket) {
-    //we listen the movement signal
+    //Local events
     socket.on('init', function (params1, params2, params3) {
         motor_sequence.controller.init(params1, params2, params3);
     });
@@ -36,8 +40,8 @@ io.sockets.on('connection', function (socket) {
 
     socket.on('stop', function (motorNumber) {
         console.log("Stop event fired");
-        motor_sequence.controller.stop(motorNumber, function(){
-            
+        motor_sequence.controller.stop(motorNumber, function () {
+
         });
     });
 
@@ -45,17 +49,33 @@ io.sockets.on('connection', function (socket) {
         switch (direction) {
             case 'forward':
                 console.log("Forward");
-                motor_sequence.controller.forward(motorNumber,function(){
+                motor_sequence.controller.forward(motorNumber, function () {
 
                 });
                 break;
             case 'backward':
                 console.log("Backward");
-                motor_sequence.controller.backward(motorNumber,function(){
+                motor_sequence.controller.backward(motorNumber, function () {
 
                 });
                 break;
         }
     });
 
+    //global events
+    socket.on('EVT.notify', function (evt, cb) {
+        $$.evt.notify(evt.name, evt.data);
+    });
+
 });
+
+var setEVT = function () {
+    try {
+        $$.evt = require(path.join(__dirname, 'evt.js'));
+        $$.evt.reg($$, null, function () { });
+    } catch (e) {
+        console.log('*** error in evt setup: %s', e, true);
+    }
+};
+
+setEVT();
