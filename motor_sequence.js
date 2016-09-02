@@ -313,7 +313,7 @@ var _breathing = function (cb) {
         });
     }, 3000);*/
 
-    _breathLoopTest(cb);
+    //_breathLoopTest(cb);
 }
 
 var _breathLoopTest = function (cb) {
