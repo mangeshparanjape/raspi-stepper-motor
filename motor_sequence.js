@@ -265,7 +265,7 @@ var _breathLoop = function (cb) {
     console.log("Breathing start");
     breathHandle = setInterval(
         _breathing,
-        20000,
+        5000,
         cb
     )
 };
@@ -312,6 +312,7 @@ var _moveUp = function (cb) {
     if (!dryRun) controller.forward(1, function () {
         setTimeout(function () {
             console.log("wait after move up");
+            cb(true);
         }, 10000);
     });
 };
@@ -340,6 +341,7 @@ var _moveNeck = function (cb) {
             controller.backward(2, function () {
                 setTimeout(function () {
                     console.log("wait after neck right");
+                    cb(true);
                 }, 20000);
             });
         }, 10000);
@@ -353,7 +355,9 @@ var _moveDown = function (cb) {
         if (!dryRun) controller.backward(1);
         cb(true);
     }, 8000);*/
-    if (!dryRun) controller.backward(1);
+    if (!dryRun) controller.backward(1, function(){
+        cb(true);
+    });
 };
 
 ee.on("restart", function () {
