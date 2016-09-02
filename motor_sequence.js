@@ -299,14 +299,14 @@ var _moveUp = function (cb) {
 var _moveNeck = function (cb) {
     setTimeout(function () {
         console.log("Move neck left");
-        forward(2);
+        controller.forward(2);
     }, 5000);
     setTimeout(function () {
         console.log("wait after neck left");
     }, 9000);
     setTimeout(function () {
         console.log("Move neck right");
-        backward(2);
+        controller.backward(2);
         cb(true);
     }, 14000);
     setTimeout(function () {
