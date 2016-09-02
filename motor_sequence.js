@@ -287,12 +287,12 @@ var _breathing = function (cb) {
     //console.log("Breathing start");
     setTimeout(function () {
         console.log("breath out");
-        controller.forward(3);
+        controller.forward(3, motorCallback);
     }, 3000);
 
     setTimeout(function () {
         console.log("breath in");
-        controller.backward(3);
+        controller.backward(3, motorCallback);
     }, 6000);
 
     setTimeout(function () {
@@ -329,7 +329,7 @@ var _breathLoopTest = function (cb) {
 var _moveUp = function (cb) {
     setTimeout(function () {
         console.log("Move Up");
-        controller.forward(1);
+        controller.forward(1, motorCallback);
         cb(true);
     }, 5000);
     /*console.log("Move Up");
@@ -344,14 +344,14 @@ var _moveUp = function (cb) {
 var _moveNeck = function (cb) {
     setTimeout(function () {
         console.log("Move neck left");
-        controller.forward(2);
+        controller.forward(2, motorCallback);
     }, 5000);
     setTimeout(function () {
         console.log("wait after neck left");
     }, 10000);
     setTimeout(function () {
         console.log("Move neck right");
-        controller.backward(2);
+        controller.backward(2, motorCallback);
         cb(true);
     }, 15000);
     setTimeout(function () {
@@ -376,7 +376,7 @@ var _moveNeck = function (cb) {
 var _moveDown = function (cb) {
     setTimeout(function () {
         console.log("Move down");
-        controller.backward(1);
+        controller.backward(1, motorCallback);
         cb(true);
     }, 5000);
 
@@ -384,6 +384,10 @@ var _moveDown = function (cb) {
     controller.backward(1, function () {
         cb(true);
     });*/
+};
+
+var motorCallback = function (){
+    console.log("cb");
 };
 
 var _sleep = function (x) {
