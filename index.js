@@ -27,7 +27,7 @@ io.sockets.on('connection', function (socket) {
     });
 
     socket.on('sequence', function () {
-        motor_sequence.startAll();
+        motor_sequence.sequenceLoop();
     });
 
     socket.on('stopall', function () {
