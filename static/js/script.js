@@ -22,13 +22,27 @@ $(function () {
 
     $('.btn-start').click(function (e) {
         isStopped = false;
-        startAll(this);
-        startSequence();
+        startSequence(this);
     });
 
     $('.btn-stop').click(function (e) {
         stopAll(this);
     });
+
+    function startSequence() {
+        try{
+            $(t).addClass(activeClass);
+            console.log("Sequence start");
+            socket.emit('sequence', function () {
+                console.log("sequence start");
+            });
+        } 
+        catch(e){
+            $(t).removeClass(activeClass);
+            console.log(e);
+        }
+    };
+
 
     function initAll(t) {
         try {
@@ -66,70 +80,6 @@ $(function () {
             $(t).removeClass(activeClass);
         }
 
-    };
-
-    function startAll(t) {
-        try {
-            $(t).addClass(activeClass);
-            handle = setInterval(function () {
-                if (move) {
-                    move = false;
-                    forward("1");
-                }
-            }, 4000);
-        }
-        catch (e) {
-            $(t).removeClass(activeClass);
-        }
-    };
-
-    function startSequence() {
-        try{
-        console.log("Sequence start");
-
-        do {
-            
-            //Breathing start - for 5 seconds
-            var flag = 0;
-            while (flag == 0) {
-                 //Motor 3 step forward
-                console.log("Breath out");
-                sleep(1000);
-                //Motor 3 step backward
-                console.log("Breath in");
-                setTimeout(function () {
-                    flag = 1;
-                }, 5000);  // 5 seconds
-            }
-           
-            //stop motor 3 and  start motor 1
-            console.log("get up")
-            //delay 5 seconds
-            sleep(5000);
-
-            //turn left motor2
-            console.log("turn left")
-            //delay 2 seconds
-            sleep(2000);
-            //turn right
-            console.log("turn right")
-            sleep(2000);
-            //move to center
-            console.log("move to center");
-            //5 seconds delay
-            sleep(5000);
-
-            //motor 1 get down
-            console.log("Get down");
-            //delay 10 seconds
-            sleep(5000);
-        }
-        while (isStopped); //while isStopped == false
-        }
-        catch(e){
-            console.log(e);
-    
-        }
     };
 
     function forward(motorNumber) {
@@ -178,9 +128,5 @@ $(function () {
             $(t).removeClass(activeClass);
         }
     };
-
-    function sleep(time) {
-        return new Promise((resolve) => setTimeout(resolve, time));
-    }
-
+   
 });
