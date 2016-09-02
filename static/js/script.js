@@ -29,7 +29,7 @@ $(function () {
         stopAll(this);
     });
 
-    function startSequence() {
+    function startSequence(t) {
         try{
             $(t).addClass(activeClass);
             console.log("Sequence start");
