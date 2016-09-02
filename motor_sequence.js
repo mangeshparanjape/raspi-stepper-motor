@@ -370,16 +370,14 @@ var _moveNeck = function (cb) {
 var _moveDown = function (cb) {
     setTimeout(function () {
         console.log("Move down");
-        if (!dryRun) controller.backward(1, function () {
-            cb(true);
-        });
-
+        if (!dryRun) controller.backward(1);
+        cb(true);
     }, 8000);
 
-    /* console.log("Move down");
-     controller.backward(1, function () {
-         cb(true);
-     });*/
+   /* console.log("Move down");
+    controller.backward(1, function () {
+        cb(true);
+    });*/
 };
 
 var _sleep = function (x) {
