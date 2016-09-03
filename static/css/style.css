@@ -8,7 +8,19 @@ body {
  background: #eee;
  margin: 0;
 }
- 
+
+table{
+  width: 80%;
+}
+
+tr{
+  width: 80%;
+}
+
+td{
+  width: 80%;
+}
+
 .wrapper {
  width: 320px;
  height: 220px;
