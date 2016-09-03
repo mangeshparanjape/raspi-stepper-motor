@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/mangeshparanjape/raspi-stepper-motor#readme",
   "dependencies": {
+    "async": "^2.0.1",
     "express": "^4.14.0",
     "johnny-five": "^0.9.61",
     "lame": "^1.2.4",

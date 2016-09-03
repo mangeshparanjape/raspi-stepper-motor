@@ -1,6 +1,6 @@
 $(function () {
     var socket = io.connect, //we connect by using a websocket
-        globalSocket = socket.connect('http://localhost:4000'),
+        globalSocket = socket.connect('54.166.89.236:4000'),
         ui = {
             initMotor: $('.btn-init'),
             startMotor: $('.btn-start'),
@@ -213,7 +213,7 @@ $(function () {
 
         globalSocket.emit('EVT.notify', dt);
 
-        console.log('*** notifying for EVT event \'%s\': ', evtname, evt);
+        console.log('*** notifying for EVT event \'%s\': ', evtName, evt);
     };
 
 });

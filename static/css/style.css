@@ -107,8 +107,8 @@ body {
 .btn-move1 {
 
  display: block;
- width: 120px;
- height: 40px;
+ width: 60px;
+ height: 20px;
  background: #222;
  border-radius: 5px;
  color: #aaa;
@@ -120,7 +120,7 @@ body {
    0 2px 0 #222,
    0 2px 3px #333;
  text-shadow: 0 -1px 0 black;
- font: normal 20px/40px helvetica, arial, sans-serif;
+ font: normal 10px/20px helvetica, arial, sans-serif;
  text-transform: uppercase;
  cursor: pointer;
  border-top: 1px solid #222;
@@ -129,8 +129,8 @@ body {
 .btn-move2 {
 
  display: block;
- width: 120px;
- height: 40px;
+ width: 60px;
+ height: 20px;
  background: #222;
  border-radius: 5px;
  color: #aaa;
@@ -142,7 +142,7 @@ body {
    0 2px 0 #222,
    0 2px 3px #333;
  text-shadow: 0 -1px 0 black;
- font: normal 20px/40px helvetica, arial, sans-serif;
+ font: normal 10px/20px helvetica, arial, sans-serif;
  text-transform: uppercase;
  cursor: pointer;
  border-top: 1px solid #222;
@@ -151,8 +151,8 @@ body {
 .btn-move3 {
 
  display: block;
- width: 120px;
- height: 40px;
+ width: 60px;
+ height: 20px;
  background: #222;
  border-radius: 5px;
  color: #aaa;
@@ -164,7 +164,7 @@ body {
    0 2px 0 #222,
    0 2px 3px #333;
  text-shadow: 0 -1px 0 black;
- font: normal 20px/40px helvetica, arial, sans-serif;
+ font: normal 10px/20px helvetica, arial, sans-serif;
  text-transform: uppercase;
  cursor: pointer;
  border-top: 1px solid #222;
