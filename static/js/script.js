@@ -13,6 +13,7 @@ $(function () {
         params1 = {},
         params2 = {},
         params3 = {},
+        params4 = {},
         activeClass = 'is-active',
         inactiveClass = 'is-inactive',
         isStopped = true,
@@ -34,16 +35,28 @@ $(function () {
         stopAll(this);
     });
 
-    $('.btn-move1').click(function (e) {
-        moveMotors("1", this);
+    $('.btn-move1-f').click(function (e) {
+        moveMotorsF("1", this);
+    });
+    
+    $('.btn-move1-b').click(function (e) {
+        moveMotorsB("1", this);
     });
 
-    $('.btn-move2').click(function (e) {
-        moveMotors("2", this);
+    $('.btn-move2-f').click(function (e) {
+        moveMotorsF("2", this);
+    });
+    
+    $('.btn-move2-b').click(function (e) {
+        moveMotorsB("2", this);
     });
 
-    $('.btn-move3').click(function (e) {
-        moveMotors("3", this);
+    $('.btn-move3-f').click(function (e) {
+        moveMotorsF("3", this);
+    });
+    
+    $('.btn-move3-b').click(function (e) {
+        moveMotorsB("3", this);
     });
 
     function startSequence(t) {
@@ -91,6 +104,19 @@ $(function () {
             params3.direction = $('#m3-direction')[0].value;
             //console.log(params);
 
+            params4.breathLoopDelay = $('#bdelay')[0].value;
+            params4.breathOut = $('#bout')[0].value;
+            params4.breathIn = $('#bin')[0].value;
+            params4.breathDelayCheck = $('#bdelaycheck')[0].value;
+            params4.breathLoopCount = $('#bloopcount')[0].value;
+            params4.moveUpDelay = $('#moveupdelay')[0].value;
+            params4.moveNeckLeftDelay = $('#neckleftdelay')[0].value;
+            params4.moveNeckLeftWait = $('#neckleftwait')[0].value;
+            params4.moveNeckRightDelay = $('#neckrightdelay')[0].value;
+            params4.moveNeckRightWait = $('#neckrightwait')[0].value;
+            params4.moveDownDelay = $('#movedowndelay')[0].value;
+            params4.dryrun = $('#dryrun')[0].value;
+
             /*socket.emit('init', params1, params2, params3, function () {
                 console.log("done");
             });*/
@@ -99,6 +125,7 @@ $(function () {
             evt.params1 = params1;
             evt.params2 = params2;
             evt.params3 = params3;
+            evt.params4 = params4;
             globalNotify('init',evt);
             console.log("init");
         }
@@ -108,17 +135,17 @@ $(function () {
 
     };
 
-    function moveMotors(motorNumber, t) {
+    function moveMotorsF(motorNumber, t) {
         try {
             var dir = "forward";
-            if (moveMotor) {
+            /*if (moveMotor) {
                 dir = "backward";
                 moveMotor = false;
             }
             else {
                 dir = "forward";
                 moveMotor = true;
-            }
+            }*/
             $(t).addClass(activeClass);
             console.log("move motor " + motorNumber);
             /*socket.emit('move', dir, motorNumber, function () {
@@ -138,6 +165,38 @@ $(function () {
         }
 
     };
+
+    function moveMotorsB(motorNumber, t) {
+        try {
+            var dir = "backward";
+            /*if (moveMotor) {
+                dir = "backward";
+                moveMotor = false;
+            }
+            else {
+                dir = "forward";
+                moveMotor = true;
+            }*/
+            $(t).addClass(activeClass);
+            console.log("move motor " + motorNumber);
+            /*socket.emit('move', dir, motorNumber, function () {
+                console.log("motor start");
+                $(t).removeClass(activeClass);
+            });*/
+
+            var  evt = {};
+            evt.direction = dir;
+            evt.motorNumber = motorNumber;
+            globalNotify('move',evt);
+            console.log("move");
+        }
+        catch (e) {
+            $(t).removeClass(activeClass);
+            console.log(e);
+        }
+
+    };
+
     function forward(motorNumber) {
         try {
             //socket.emit('move', 'forward', motorNumber);

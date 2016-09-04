@@ -9,12 +9,12 @@ var async = require("async"),
     soundClip = __dirname + '/sound/SnoringMale.mp3',
     dryRun = true,
     stepperWiringpi,
-    omxp; 
+    omxp;
 
-    if(!dryRun){
-        stepperWiringpi = require('stepper-wiringpi');
-        omxp = require('omxplayer-controll');
-    }
+if (!dryRun) {
+    stepperWiringpi = require('stepper-wiringpi');
+    omxp = require('omxplayer-controll');
+}
 
 //motor and music functions
 var opts = {
@@ -46,6 +46,20 @@ var stopAll = function () {
 
 var motor1, motor2, motor3;
 var controller = {
+    sequenceParams: {
+        breathLoopDelay: 10000,
+        breathOut: 3000,
+        breathIn: 6000,
+        breathDelayCheck: 9000,
+        breathLoopCount: 5,
+        moveUpDelay: 5000,
+        moveNeckLeftDelay: 5000,
+        moveNeckLeftWait: 10000,
+        moveNeckRightDelay: 15000,
+        moveNeckRightWait: 20000,
+        moveDownDelay: 5000,
+        dryRun: true
+    },
     params1: {
         rpm: 200,
         pin1: 23,
@@ -74,7 +88,7 @@ var controller = {
         direction: "forward"
     },
 
-    init: function (pr1, pr2, pr3) {
+    init: function (pr1, pr2, pr3, pr4) {
         if (!dryRun) {
             motor1 = null;
             motor2 = null;
@@ -106,6 +120,27 @@ var controller = {
                 this.params3.clip = pr3.clip;
                 this.params3.direction = pr3.direction;
             }
+            try {
+                if (pr4) {
+                    this.sequenceParams.breathLoopDelay = parseInt(pr4.breathLoopDelay, 10);
+                    this.sequenceParams.breathOut = parseInt(pr4.breathOut, 10);
+                    this.sequenceParams.breathIn = parseInt(pr4.breathIn, 10);
+                    this.sequenceParams.breathDelayCheck = parseInt(pr4.breathDelayCheck, 10);
+                    this.sequenceParams.breathLoopCount = parseInt(pr4.breathLoopCount, 10);
+                    this.sequenceParams.moveUpDelay = parseInt(pr4.moveUpDelay, 10);
+                    this.sequenceParams.moveNeckLeftDelay = parseInt(pr4.moveNeckLeftDelay, 10);
+                    this.sequenceParams.moveNeckLeftWait = parseInt(pr4.moveNeckLeftWait, 10);
+                    this.sequenceParams.moveNeckRightDelay = parseInt(pr4.moveNeckRightDelay, 10);
+                    this.sequenceParams.moveNeckRightWait = parseInt(pr4.moveNeckRightWait, 10);
+                    this.sequenceParams.moveDownDelay = parseInt(pr4.moveDownDelay, 10);
+                    this.sequenceParams.dryRun = pr4.dryRun;
+                    dryRun = this.sequenceParams.dryRun;
+                }
+            }
+            catch (e) {
+                console.log(e);
+            }
+
             motor1 = stepperWiringpi.setup(this.params1.rpm, this.params1.pin1, this.params1.pin2);
             motor1.setSpeed(this.params1.speed);
             motor2 = stepperWiringpi.setup(this.params2.rpm, this.params2.pin1, this.params2.pin2);
@@ -287,7 +322,7 @@ var _breathLoop = function (cb) {
     console.log("Breathing start");
     breathHandle = setInterval(
         _breathing,
-        10000,
+        controller.sequenceParams.breathLoopDelay,
         cb
     )
 };
@@ -297,17 +332,17 @@ var _breathing = function (cb) {
     setTimeout(function () {
         console.log("breath out");
         controller.forward(3, motorCallback);
-    }, 3000);
+    }, controller.sequenceParams.breathOut);
 
     setTimeout(function () {
         console.log("breath in");
         controller.backward(3, motorCallback);
-    }, 6000);
+    }, controller.sequenceParams.breathIn);
 
     setTimeout(function () {
         //breath loop check
         _breathLoopTest(cb);
-    }, 9000);
+    }, controller.sequenceParams.breathDelayCheck);
 
     /*console.log("breath out");
     setTimeout(function () {
@@ -328,7 +363,7 @@ var _breathing = function (cb) {
 var _breathLoopTest = function (cb) {
     bCount++;
     console.log(bCount);
-    if (bCount == 2 | stopAll) {
+    if (bCount == controller.sequenceParams.breathLoopCount | stopAll) {
         clearInterval(breathHandle);
         breathHandle = 0;
         cb(true);
@@ -340,7 +375,7 @@ var _moveUp = function (cb) {
         console.log("Move Up");
         controller.forward(1, motorCallback);
         cb(true);
-    }, 5000);
+    }, controller.sequenceParams.moveUpDelay);
     /*console.log("Move Up");
     controller.forward(1, function () {
         setTimeout(function () {
@@ -354,18 +389,18 @@ var _moveNeck = function (cb) {
     setTimeout(function () {
         console.log("Move neck left");
         controller.forward(2, motorCallback);
-    }, 5000);
+    }, controller.sequenceParams.moveNeckLeftDelay);
     setTimeout(function () {
         console.log("wait after neck left");
-    }, 10000);
+    }, controller.sequenceParams.moveNeckLeftWait);
     setTimeout(function () {
         console.log("Move neck right");
         controller.backward(2, motorCallback);
-    }, 15000);
+    }, controller.sequenceParams.moveNeckRightDelay);
     setTimeout(function () {
         cb(true);
         console.log("wait after neck right");
-    }, 20000);
+    }, controller.sequenceParams.moveNeckRightWait);
     /*console.log("Move neck left");
     controller.forward(2, function () {
         console.log("wait after neck left");
@@ -387,7 +422,7 @@ var _moveDown = function (cb) {
         console.log("Move down");
         controller.backward(1, motorCallback);
         cb(true);
-    }, 5000);
+    }, controller.sequenceParams.moveDownDelay);
 
     /* console.log("Move down");
      controller.backward(1, function () {

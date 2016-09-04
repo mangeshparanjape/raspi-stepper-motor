@@ -30,7 +30,7 @@ exports.reg = function (mod, cbr) {
         $.io.sockets.emit(evt.name, evt.data);
 
         if (evt.name == 'init') {
-            $.motor_sequence.controller.init(evt.data.params1, evt.data.params2, evt.data.params3);
+            $.motor_sequence.controller.init(evt.data.params1, evt.data.params2, evt.data.params3, evt.data.params4);
         }
 
         if (evt.name == 'sequence') {

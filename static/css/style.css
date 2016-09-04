@@ -116,7 +116,29 @@ td{
  border-top: 1px solid #222;
 }
 
-.btn-move1 {
+.btn-move1-f, .btn-move2-f, .btn-move3-f {
+
+ display: block;
+ width: 60px;
+ height: 20px;
+ background: #222;
+ border-radius: 5px;
+ color: #aaa;
+ text-align: center;
+ 
+ box-shadow:
+   inset 0 0 50px #333,
+   0 4px 0 black,
+   0 2px 0 #222,
+   0 2px 3px #333;
+ text-shadow: 0 -1px 0 black;
+ font: normal 10px/20px helvetica, arial, sans-serif;
+ text-transform: uppercase;
+ cursor: pointer;
+ border-top: 1px solid #222;
+}
+
+.btn-move1-b, .btn-move2-b, .btn-move3-b {
 
  display: block;
  width: 60px;
