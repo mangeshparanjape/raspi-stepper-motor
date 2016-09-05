@@ -327,10 +327,11 @@ var _sequenceStart = function () {
 var _newSequenceStart = function () {
     console.log("breathing start");
     //breathing
-    breathHandle = setInterval(
-        _newBreathing,
-        controller.sequenceParams.breathLoopDelay
-    )
+    //breathHandle = setInterval(
+    //  _newBreathing,
+    //    controller.sequenceParams.breathLoopDelay
+    //)
+    _newBreathing();
 };
 
 var _breathLoop = function (cb) {
