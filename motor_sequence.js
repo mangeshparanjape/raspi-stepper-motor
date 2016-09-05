@@ -7,7 +7,7 @@ var async = require("async"),
     ee = new EventEmitter(),
     clip = '/home/stepper-ctrl/raspi-stepper-motor/sound/SnoringMale.mp3',
     soundClip = __dirname + '/sound/SnoringMale.mp3',
-    dryRun = false,
+    dryRun = true,
     stepperWiringpi,
     omxp;
 
