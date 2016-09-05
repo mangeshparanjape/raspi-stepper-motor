@@ -385,13 +385,13 @@ var _newBreathing = function (cb) {
             console.log("Move down");
             controller.forward(1, function () {
                 console.log("Finish cycle");
-                setTimeout(function () {
+                /*setTimeout(function () {
                     if (!stopAll) {
                         if (ee) {
                             ee.emit('restart');
                         }
                     }
-                }, controller.sequenceParams.breathLoopDelay);
+                }, controller.sequenceParams.breathLoopDelay);*/
             });
         });
     });
@@ -486,6 +486,8 @@ ee.on("restart", function () {
 ee.on("stopAll", function () {
     console.log("Stop ALl");
     stopAll = true;
+    clearInterval(breathHandle);
+    breathHandle = 0;
 });
 
 exports.sequenceLoop = sequenceLoop;
