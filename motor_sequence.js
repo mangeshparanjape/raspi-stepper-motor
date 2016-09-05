@@ -7,7 +7,7 @@ var async = require("async"),
     ee = new EventEmitter(),
     clip = '/home/stepper-ctrl/raspi-stepper-motor/sound/SnoringMale.mp3',
     soundClip = __dirname + '/sound/SnoringMale.mp3',
-    dryRun = true,
+    dryRun = false,
     stepperWiringpi,
     omxp;
 
@@ -37,8 +37,15 @@ var sequenceLoop = function () {
     stopAll = false;
     bCount = 0;
     breathHandle = 0;
-    _sequenceStart();
+    _newSequenceStart();
 };
+
+/*var sequenceLoop = function () {
+    stopAll = false;
+    bCount = 0;
+    breathHandle = 0;
+    _sequenceStart();
+};*/
 
 var stopAll = function () {
     stopAll = true;
@@ -65,7 +72,7 @@ var controller = {
         pin1: 23,
         pin2: 24,
         speed: 60,
-        steps: 100,
+        steps: 1200,
         clip: 0,
         direction: "forward"
     },
@@ -74,7 +81,7 @@ var controller = {
         pin1: 27,
         pin2: 22,
         speed: 60,
-        steps: 100,
+        steps: 400,
         clip: 0,
         direction: "forward"
     },
@@ -83,7 +90,7 @@ var controller = {
         pin1: 17,
         pin2: 18,
         speed: 60,
-        steps: 100,
+        steps: 4800,
         clip: 0,
         direction: "forward"
     },
@@ -317,6 +324,15 @@ var _sequenceStart = function () {
     });
 };
 
+var _newSequenceStart = function () {
+    console.log("breathing start");
+    //breathing
+    breathHandle = setInterval(
+        _newBreathing,
+        controller.sequenceParams.breathLoopDelay
+    )
+};
+
 var _breathLoop = function (cb) {
     //breathing
     console.log("Breathing start");
@@ -359,6 +375,28 @@ var _breathing = function (cb) {
 
     //_breathLoopTest(cb);
 }
+
+
+var _newBreathing = function (cb) {
+    //console.log("Breathing start");
+    controller.backward(3, function () {
+        console.log("Move Up");
+        controller.backward(1, function () {
+            console.log("Move down");
+            controller.forward(1, function () {
+                console.log("Finish cycle");
+                setTimeout(function () {
+                    if (!stopAll) {
+                        if (ee) {
+                            ee.emit('restart');
+                        }
+                    }
+                }, controller.sequenceParams.breathLoopDelay);
+            });
+        });
+    });
+}
+
 
 var _breathLoopTest = function (cb) {
     bCount++;

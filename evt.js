@@ -1,5 +1,6 @@
 var port = process.env.EVENTER_SERVICE_PORT || process.env.EVT_PORT || 4000;
 var host = '54.166.89.236';
+//var host = 'localhost';
 var socket = require('socket.io-client')('http://' + host + ':' + port);
 var room = 'iot-evt';
 console.log('*** EVT client is waiting for EVT server on %s:%s', host, port);
