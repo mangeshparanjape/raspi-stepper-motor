@@ -7,7 +7,7 @@ var async = require("async"),
     ee = new EventEmitter(),
     clip = '/home/stepper-ctrl/raspi-stepper-motor/sound/SnoringMale.mp3',
     soundClip = __dirname + '/sound/SnoringMale.mp3',
-    dryRun = true,
+    dryRun = false,
     stepperWiringpi,
     omxp;
 
@@ -381,20 +381,24 @@ var _breathing = function (cb) {
 var _newBreathing = function (cb) {
     //console.log("Breathing start");
     controller.backward(3, function () {
-        console.log("Move Up");
-        controller.backward(1, function () {
-            console.log("Move down");
-            controller.forward(1, function () {
-                console.log("Finish cycle");
+        setTimeout(function () {
+            console.log("Move Up");
+            controller.backward(1, function () {
                 setTimeout(function () {
-                    if (!stopAll) {
-                        if (ee) {
-                            ee.emit('restart');
-                        }
-                    }
-                }, controller.sequenceParams.breathLoopDelay);
+                    console.log("Move down");
+                    controller.forward(1, function () {
+                        console.log("Finish cycle");
+                        setTimeout(function () {
+                            if (!stopAll) {
+                                if (ee) {
+                                    ee.emit('restart');
+                                }
+                            }
+                        }, controller.sequenceParams.breathLoopDelay);
+                    });
+                }, controller.sequenceParams.moveDownDelay);
             });
-        });
+        }, controller.sequenceParams.moveUpDelay);
     });
 }
 
