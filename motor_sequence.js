@@ -54,7 +54,7 @@ var stopAll = function () {
 var motor1, motor2, motor3;
 var controller = {
     sequenceParams: {
-        breathLoopDelay: 15000,
+        breathLoopDelay: 30000,
         breathOut: 3000,
         breathIn: 6000,
         breathDelayCheck: 9000,
@@ -64,7 +64,7 @@ var controller = {
         moveNeckLeftWait: 10000,
         moveNeckRightDelay: 15000,
         moveNeckRightWait: 20000,
-        moveDownDelay: 5000,
+        moveDownDelay: 20000,
         dryRun: true
     },
     params1: {
@@ -72,7 +72,7 @@ var controller = {
         pin1: 23,
         pin2: 24,
         speed: 60,
-        steps: 1200,
+        steps: 1000,
         clip: 0,
         direction: "forward"
     },
@@ -90,7 +90,7 @@ var controller = {
         pin1: 17,
         pin2: 18,
         speed: 60,
-        steps: 4800,
+        steps: 3600,
         clip: 0,
         direction: "forward"
     },
